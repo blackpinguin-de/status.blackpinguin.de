@@ -2,7 +2,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>status.blackpinguin.de</title>
+    <title><?= $_SERVER['HTTP_HOST'] ?></title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta http-equiv="content-language" content="en">
     <meta name="DC.Language" content="en">
@@ -18,7 +18,7 @@
 
         <!-- Title -->
         <h1 id="title" class="round sub">
-            status.blackpinguin.de
+            <?= $_SERVER['HTTP_HOST'] ?>
             <a class="round sub imp" href="https://rcl.blackpinguin.de/legal">Impressum</a>
         </h1>
 
@@ -79,7 +79,7 @@
 
         </div>
 
-	<!-- Disk Usage -->
+        <!-- Disk Usage -->
         <div class="round sub">
             <h2 class="header">Disk Usage</h2>
             <?php diskBars(); ?>

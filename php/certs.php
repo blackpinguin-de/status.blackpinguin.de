@@ -1,6 +1,7 @@
 <?php
 
 // Certificates
+if (in_array($_SERVER['HTTP_HOST'], ['status.server', 'status.blackpinguin.de'])) {
 $crtFiles = array(
   '*.blackpinguin.de'      => '/rcl/certs/domain.crt',
   'xmpp.blackpinguin.de'   => '/rcl/certs/xmpp.crt',
@@ -41,6 +42,11 @@ $crtFiles = array(
 // 'vpn2.blackpinguin.de'   => '/svn/vpn/easy-rsa/keys/svn.blackpinguin.de.crt',
 // 'rcl.vpn2.blackpinguin.de'   => '/svn/vpn/easy-rsa/keys/robin.svn.blackpinguin.de.crt',
 );
+} else if ($_SERVER['HTTP_HOST'] === 'status.localhost') {
+    $crtFiles = ["*.blackpinguin.de" => '/rcl/www/cert/domain.crt'];
+} else {
+    $crtFiles = [];
+}
 
 $cas = array(
   "CAcert Inc." => "https://www.cacert.org/",
