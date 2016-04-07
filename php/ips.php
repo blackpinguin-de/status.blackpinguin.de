@@ -77,7 +77,7 @@ function hostCheck(){
         foreach($showAlways as $ip) {
                 $stati[$ip] = false;
         }
-	$stati['192.168.4.3'] = true; // localhost
+        $stati['192.168.4.3'] = true; // localhost
 
         // find online hosts
         foreach(explode("\n", $online) as $item) {
@@ -105,7 +105,9 @@ function hostCheck(){
         foreach($stati as $ip => $on) {
             $name = $hosts[$ip];
             if(preg_match("|^Laptop|i", $name) && $on) { $laptop = true; continue; }
-            if(preg_match("|^PC( \[[^K\]].*\])?|i", $name) && $on) { $pc = true; continue; }
+            if(preg_match("|^PC$|i", $name) && $on) { $pc = true; continue; }
+            if(preg_match("|^PC \[[^K].*\]|i", $name) && $on) { $pc = true; continue; }
+            if(preg_match("|^PC \[K[^\]].*\]|i", $name) && $on) { $pc = true; continue; }
         }
         if(! $laptop) { $stati['192.168.4.4'] = false; }
         if(! $pc) { $stati['192.168.4.2'] = false; }
@@ -133,7 +135,7 @@ function hostCheck(){
                 echo "</tr>";
         }}
 
-	if (count($ips) < 2) {echo "<!-- $online -->";}
+    if (count($ips) < 2) {echo "<!-- $online -->";}
 }
 
 function lastIPs(){
