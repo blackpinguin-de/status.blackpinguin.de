@@ -157,15 +157,22 @@ function lastIPs(){
 
         $first = true;
         while($row = $res->fetch_assoc()){
+		$h = 24 * (int) preg_replace("|^(?:([0-9]+)d )?[0-9]+h [0-9]+m$|","$1",$row['duration']);
+		$h += (int) preg_replace("|^(?:[0-9]+d )?([0-9]+)h [0-9]+m$|","$1",$row['duration']);
+
                 echo  "<tr";
-                if($first){
+                if ($first) {
                         echo " class='green'";
                         $current_ip = $row['ip'];
-                }
+                } else if ($h <= 6) {
+			echo " class='red'";
+		} else if ($h <= 22) {
+			echo " class='orange'";
+		}
                 echo ">"
-                . "<td>".$row['ip']."</td>"
-                . "<td>".$row['duration']."</td>"
-                . "<td>".breakDate($row['von'])
+                . "<td>" . $row['ip'] . "</td>"
+                . "<td>" . $row['duration'] . "</td>"
+                . "<td>". breakDate($row['von'])
                 ;
                 if($row['von'] !== $row['bis']) {
                         echo "&nbsp;&ndash; ".breakDate($row['bis']);
