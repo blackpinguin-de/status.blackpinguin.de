@@ -16,9 +16,11 @@ $apt = trim(@shell_exec('sec=$(stat -c %Y /var/cache/apt/) ; date -d "@$sec" +"%
 $last_backup = trim(@shell_exec("cat /rcl/logs/last_backup.txt"));
 $now   = time();
 $aptt  = strtotime('+1 week', strtotime($apt));
-$backt = strtotime('+1 week', strtotime($last_backup));
-$apt = "<span class='".($aptt  < $now ? 'red' : 'green')."'>$apt</span>";
-$last_backup = "<span class='".($backt < $now ? 'red' : 'green')."'>$last_backup</span>";
+$backt = strtotime('+4 days', strtotime($last_backup));
+$aptt2  = strtotime('+2 week', strtotime($apt));
+$backt2 = strtotime('+8 days', strtotime($last_backup));
+$apt = "<span class='".($aptt  < $now ? ($aptt2 < $now ? 'red' : 'orange') : 'green')."'>$apt</span>";
+$last_backup = "<span class='".($backt < $now ? ($backt2 < $now ? 'red' : 'orange') : 'green')."'>$last_backup</span>";
 
 
 ?>

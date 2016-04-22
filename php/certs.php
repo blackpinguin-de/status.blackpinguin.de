@@ -69,7 +69,7 @@ function toDuration($seconds, $min = "d"){
         $d = floor($td % 365);
         $a = floor($ta);
 
-        $dur = ($m<10?"0":"")."${m}m";
+        $dur = ( $m < 10 ? "0" : "" ) . "${m}m";
         if($th >= 1 || in_array($min, ["h","d","a"])){$dur = ($h<10?"0":"")."${h}h " . $dur;}
         if($td >= 1 || in_array($min, ["d","a"])){$dur = "${d}d " . $dur;}
         if($ta >= 1 || in_array($min, ["a"])){$dur = "${a}y " . $dur;}
@@ -94,7 +94,8 @@ function crtCheck(){
                 $date = date("Y-m-d H:i:s T", $until);
                 $ca = $cas[$domain];
                 $duration = toDuration(round($until - time()));
-                $color = ( round($until - time()) / (60 * 60 * 24) >= 14 ? "green" : "red" );
+		$days = round($until - time()) / (60 * 60 * 24);
+                $color = ( $days >= 14 ? "green" : ( $days >= 7 ? "orange" : "red" ) );
                 echo "<tr>";
                 echo "<td>$domain</td>";
                 echo "<td>$ca</td>";
