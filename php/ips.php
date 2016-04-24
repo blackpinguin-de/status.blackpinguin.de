@@ -5,14 +5,14 @@ $hosts = array(
   '192.168.4.1' => 'Router',
   '192.168.4.2' => 'PC',        // d8:cb:8a:a3:fb:37 (eth)  Titan-5960X
   '192.168.4.3' => 'Server',    // e0:cb:4e:06:20:7e (eth)  EB1012
-  '192.168.4.4' => 'Laptop',    // 00:15:af:d8:ea:2f (wifi) LADIGES-1000H
+  '192.168.4.4' => 'Laptop',    // 00:15:af:d8:ea:2f (wifi) e1000h
 
   '192.168.4.5' => 'GameCube',  // 00:09:bf:01:c5:03 (eth)
 //'192.168.4.6' => 'Wii U',     // ---
   '192.168.4.7' => 'PS4',       // 0c:fe:45:03:59:ac (eth)
 //'192.168.4.8' => 'XBoxOne',   // ---
-  '192.168.4.13' => 'PC [K]',   // 54:04:a6:f2:03:45 (eth)  LADIGES-250X2
-  '192.168.4.14' => 'TV [K]',   // f4:7b:5e:46:17:ae (wifi)
+  '192.168.4.13' => 'PC [Pinguin]', // d0:50:99:92:7c:cb (eth)  Pinguin-G1840
+  '192.168.4.14' => 'TV',           // f4:7b:5e:46:17:ae (wifi)
 //'192.168.4.17' => 'Server VPN',
   '192.168.4.18' => 'Laptop (vpn)',
   '192.168.4.19' => 'PC [Killer] (vpn)',
@@ -21,16 +21,17 @@ $hosts = array(
 // Map<Phy, Hostname>
 $macs = array(
   '00:1f:1f:34:29:4c' => 'Router',
-  '00:e0:4c:68:1f:50' => 'PC [Killer]', // Killer-6400XT
-  'd8:cb:8a:a3:fb:37' => 'PC [Titan]',  // Titan-5960X
+  '00:e0:4c:68:1f:50' => 'PC [Killer]',  // Killer-6400XT
+  'd8:cb:8a:a3:fb:37' => 'PC [Titan]',   // Titan-5960X
+  'd0:50:99:92:7c:cb' => 'PC [Pinguin]', // Pinguin-G1840
+//  '54:04:a6:f2:03:45' => 'PC [K]', // LADIGES-250X2 (K, Trojan)
   'e0:cb:4e:06:20:7e' => 'Server',
   '00:15:af:d8:ea:2f' => 'Laptop (wifi)',
   '00:24:8C:25:B2:79' => 'Laptop (eth)',
   '00:09:bf:01:c5:03' => 'Gamecube',
   '0c:fe:45:03:59:ac' => 'PS4 (eth)',
   '60:5b:b4:03:d1:97' => 'PS4 (wifi)',
-  '54:04:a6:f2:03:45' => 'PC [K]',
-  'f4:7b:5e:46:17:ae' => 'TV [K]',
+  'f4:7b:5e:46:17:ae' => 'TV',
 );
 
 // IPs that are shown when they are offline
@@ -106,8 +107,8 @@ function hostCheck(){
             $name = $hosts[$ip];
             if(preg_match("|^Laptop|i", $name) && $on) { $laptop = true; continue; }
             if(preg_match("|^PC$|i", $name) && $on) { $pc = true; continue; }
-            if(preg_match("|^PC \[[^K].*\]|i", $name) && $on) { $pc = true; continue; }
-            if(preg_match("|^PC \[K[^\]].*\]|i", $name) && $on) { $pc = true; continue; }
+            if(preg_match("|^PC \[[^P].*\]|i", $name) && $on) { $pc = true; continue; }
+            //if(preg_match("|^PC \[K[^\]].*\]|i", $name) && $on) { $pc = true; continue; }
         }
         if(! $laptop) { $stati['192.168.4.4'] = false; }
         if(! $pc) { $stati['192.168.4.2'] = false; }
