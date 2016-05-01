@@ -12,7 +12,6 @@ function diskBars(){
 
     if (in_array($_SERVER['HTTP_HOST'], ['status.server', 'status.blackpinguin.de'])) {
         // allways show
-        $data["/backup"] = array(72247368, 0.0, 0.0, false);
         $data["/ext/media"] = array(433491744, 0.0, 0.0, false);
         $data["/ext/images"] = array(1056894132, 0.0, 0.0, false);
         $data["/ext/encrypted"] = array(186623424, 0.0, 0.0, false);
