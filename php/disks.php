@@ -1,5 +1,15 @@
 <?php
 
+function diskColor($p) {
+	//$max = 255.0; // 0xff
+	$max = 128.0; // 0x80
+    $r = dechex(max(0, min($max, round((2.0 - $p * 2.0) * $max))));
+    $g = dechex(max(0, min($max, round($p * 2 * $max))));
+    if (strlen($r) === 1) { $r = "0" . $r; }
+    if (strlen($g) === 1) { $g = "0" . $g; }
+    return "#" . $r . $g . "00";
+}
+
 function diskBars(){
 //  $diskspace = trim(@shell_exec("df | grep '^/dev/' | sed -re 's|.* ([0-9]+) +([0-9]+) +[0-9]+ +[0-9]+% +(/.*)|\\1 \\2 \\3|g'"));
 //  $memory = trim(@shell_exec("cat /proc/meminfo | grep 'Mem' | sed -re 's|Mem(.+): +([0-9]+) kB|\\1 \\2|g'"));
@@ -54,7 +64,8 @@ function diskBars(){
             $total = round($x[0]/1048576, 2);
             $free = round(($x[0]-$x[1])/1048576, 2);
             $title = "For '$name' $used GiB from a total of $total GiB is in use (".round($x[2],2)."%), which leaves $free GiB free (".round(100.0 - $x[2],2)."%).";
-            echo "<div style='width:$size%' title=\"$title\">";
+            $color = diskColor(4.0 - $x[2] * 0.04);
+            echo "<div style='width:$size%; background-color: $color;' title=\"$title\">";
             echo "<div style='width:". $x[2] ."%;'>";
             echo "<span>$name<span>";
             echo "$used of $total";
