@@ -110,6 +110,8 @@
             <tr> <th>Network</th> <th>Duration</th> <th># Alloc.</th> <th># IPs</th> <th>First Allocation</th> <th>Last Allocation</th> </tr>
             <?php topIPs(); ?>
             </table>
+            <br/>
+            <div><?php ipDowntime(); ?></div>
         </div>
 
     </div>

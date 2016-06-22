@@ -223,5 +223,40 @@ function topIPs(){
         }
 }
 
+function ipDowntime(){
+	global $mysqli;
+    global $current_ip;
+
+    if($mysqli->connect_error){ echo "MySQL connection error"; return; }
+
+    $qr = "
+		SELECT
+		    first
+		  -- , last
+		  -- , total as total
+		  -- , uptime as uptime
+		  , total - uptime as downtime
+		  , ROUND(uptime / total * 100, 2) as online
+		FROM
+        (
+        SELECT
+            1 as id
+          , with_timezone(MIN(von)) first
+          -- , with_timezone(MAX(bis)) last
+          , MAX(UNIX_TIMESTAMP(bis)) - MIN(UNIX_TIMESTAMP(von)) as total
+          , SUM( UNIX_TIMESTAMP(bis) - UNIX_TIMESTAMP(von) ) as uptime
+        FROM iplog_raw
+        GROUP BY 1
+        ) as x
+    ";
+    $res = $mysqli->query($qr);
+    if($res === FALSE){ echo("<tr><td colspan='6'>MySQL query error</td></tr>"); return; }
+
+    while($row = $res->fetch_assoc()){
+        echo "Since ".$row['first']." this server was offline for about <span class='red'>".toDuration($row['downtime'])."</span>, meaning it was online <span class='green'>".$row['online']."%</span> of the time.";
+        return;
+    }
+}
+
 
 ?>
