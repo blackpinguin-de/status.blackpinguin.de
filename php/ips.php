@@ -253,7 +253,7 @@ function ipDowntime(){
     if($res === FALSE){ echo("<tr><td colspan='6'>MySQL query error</td></tr>"); return; }
 
     while($row = $res->fetch_assoc()){
-        echo "Since ".$row['first']." this server was offline for about <span class='red'>".toDuration($row['downtime'])."</span>, meaning it was online <span class='green'>".$row['online']."%</span> of the time.";
+        echo "Since ".$row['first']." this server was offline for at least <span class='red'>".toDuration($row['downtime'])."</span>, implying it was online <span class='green'>".$row['online']."%</span> of the time.";
         return;
     }
 }
