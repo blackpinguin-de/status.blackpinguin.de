@@ -195,7 +195,7 @@ function topIPs(){
                   , COUNT(*) anzahl
                   , COUNT(distinct x.ip) ips
                   , SUM(TIME_TO_SEC(TIMEDIFF(x.bis,x.von))) ord
-                  , round_timesec(SUM(TIME_TO_SEC(TIMEDIFF(x.bis,x.von)))) duration
+                  , SUM(TIME_TO_SEC(TIMEDIFF(x.bis,x.von))) duration
                   , with_timezone(min(x.von)) first
                   , with_timezone(max(x.bis)) last
                 FROM iplog_raw x
@@ -215,7 +215,7 @@ function topIPs(){
                         if($a >> 4 === $b >> 4){echo " class='green'";}
                 }
                 echo "><td>" . $row['ip'] . "</td>";
-                echo "<td>" . breakDuration($row['duration']) . "</td>";
+                echo "<td>" . breakDuration(toDuration($row['duration'])) . "</td>";
                 echo "<td>" . $row['anzahl'] . "</td>";
                 echo "<td>" . $row['ips'] . "</td>";
                 echo "<td>" . breakTime($row['first']) . "</td>";
