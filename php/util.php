@@ -2,7 +2,7 @@
 
 function toDuration($seconds, $min = "d"){
         $dur = "";
-        $tm = floor(abs($seconds) / 60);
+        $tm = round(abs($seconds) / 60);
         $th = floor($tm / 60);
         $td = floor($th / 24);
         $ta = floor($td / 365);

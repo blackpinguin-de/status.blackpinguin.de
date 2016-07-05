@@ -3,7 +3,8 @@
 // Map<IP, Hostname>
 $hosts = array(
   '192.168.4.1' => 'Router',
-  '192.168.4.2' => 'PC',        // d8:cb:8a:a3:fb:37 (eth)  Titan-5960X
+//  '192.168.4.2' => 'PC',        // d8:cb:8a:a3:fb:37 (eth)  Titan-5960X
+  '192.168.4.2' => 'PC',        // 88:88:88:88:87:88 (eth)  Titan-5960X
   '192.168.4.3' => 'Server',    // e0:cb:4e:06:20:7e (eth)  EB1012
   '192.168.4.4' => 'Laptop',    // 00:15:af:d8:ea:2f (wifi) e1000h
 
@@ -22,7 +23,8 @@ $hosts = array(
 $macs = array(
   '00:1f:1f:34:29:4c' => 'Router',
   '00:e0:4c:68:1f:50' => 'PC [Killer]',  // Killer-6400XT
-  'd8:cb:8a:a3:fb:37' => 'PC [Titan]',   // Titan-5960X
+//  'd8:cb:8a:a3:fb:37' => 'PC [Titan]',   // Titan-5960X
+  '88:88:88:88:87:88' => 'PC [Titan]',   // Titan-5960X
   'd0:50:99:92:7c:cb' => 'PC [Pinguin]', // Pinguin-G1840
 //  '54:04:a6:f2:03:45' => 'PC [K]', // LADIGES-250X2 (K, Trojan)
   'e0:cb:4e:06:20:7e' => 'Server',
@@ -140,47 +142,59 @@ function hostCheck(){
 }
 
 function lastIPs(){
-        global $mysqli;
-        global $current_ip;
+    global $mysqli;
+    global $current_ip;
 
-        if($mysqli->connect_error){ echo "<tr><td colspan='4'>MySQL connection error</td></tr>"; return; }
+    if($mysqli->connect_error){ echo "<tr><td colspan='4'>MySQL connection error</td></tr>"; return; }
 
-        $qr = "
-                SELECT von, bis, ip, duration
-                  /*, (SELECT COUNT(*) FROM `iplog` b WHERE a.ip = b.ip) as anzahl*/
-                FROM iplog a
-                WHERE bis >= DATE_SUB(CURDATE(), interval 7 day)
-                ORDER BY bis desc;
-        ";
-        $res = $mysqli->query($qr);
-        if($res === FALSE){exit("ERROR: MySQL query error");}
-        if($res === FALSE){ echo "<tr><td colspan='4'>MySQL query error</td></tr>"; return; }
+    $qr = "
+            SELECT von, bis, ip, duration, offline
+              /*, (SELECT COUNT(*) FROM `iplog` b WHERE a.ip = b.ip) as anzahl*/
+            FROM iplog a
+            WHERE bis >= DATE_SUB(CURDATE(), interval 7 day)
+            ORDER BY bis desc;
+    ";
+    $res = $mysqli->query($qr);
+    if($res === FALSE){exit("ERROR: MySQL query error");}
+    if($res === FALSE){ echo "<tr><td colspan='4'>MySQL query error</td></tr>"; return; }
 
-        $first = true;
-        while($row = $res->fetch_assoc()){
+    $first = true;
+    $one_offline = false;
+    $body = "";
+    while($row = $res->fetch_assoc()){
 		$h = 24 * (int) preg_replace("|^(?:([0-9]+)d )?[0-9]+h [0-9]+m$|","$1",$row['duration']);
 		$h += (int) preg_replace("|^(?:[0-9]+d )?([0-9]+)h [0-9]+m$|","$1",$row['duration']);
+		$offline = $row['offline'];
 
-                echo  "<tr";
-                if ($first) {
-                        echo " class='green'";
-                        $current_ip = $row['ip'];
-                } else if ($h <= 6) {
-			echo " class='red'";
+        $body .= "<tr";
+        if ($first) {
+            $body .= " class='green'";
+            $current_ip = $row['ip'];
+        } else if ($h <= 6 || $offline >= 30) {
+			$body .= " class='red'";
 		} else if ($h <= 22) {
-			echo " class='orange'";
+			$body .= " class='orange'";
 		}
-                echo ">"
-                . "<td>" . $row['ip'] . "</td>"
-                . "<td>" . $row['duration'] . "</td>"
-                . "<td>". breakDate($row['von'])
-                ;
-                if($row['von'] !== $row['bis']) {
-                        echo "&nbsp;&ndash; ".breakDate($row['bis']);
-                }
-                echo "</td></tr>\n";
-                $first = false;
+        $body .= ">"
+        . "<td>" . $row['ip'] . "</td>"
+        . "<td>" . $row['duration'] . "</td>"
+        ;
+        if ($offline >= 30) {
+	        $body .= "<td class='red'>" . breakDuration(toDuration($offline, 'h')) . "</td>";
+	        $one_offline = true;
+		} else {
+			$body .= "<td/>";
+		}
+        $body .= "<td>". breakDate($row['von'])
+        ;
+        if($row['von'] !== $row['bis']) {
+            $body .= "&nbsp;&ndash; ".breakDate($row['bis']);
         }
+        $body .= "</td></tr>\n";
+        $first = false;
+    }
+    echo "<tr> <th>IP</th> <th>Duration</th> ".($one_offline ? "<th>Offline</th> " : "<th/>")." <th>Timeframe</th> </tr>";
+    echo $body;
 }
 
 function topIPs(){
@@ -243,8 +257,8 @@ function ipDowntime(){
             1 as id
           , with_timezone(MIN(von)) first
           -- , with_timezone(MAX(bis)) last
-          , MAX(UNIX_TIMESTAMP(bis)) - MIN(UNIX_TIMESTAMP(von)) as total
-          , SUM( UNIX_TIMESTAMP(bis) - UNIX_TIMESTAMP(von) ) as uptime
+          , UNIX_TIMESTAMP(MAX(bis)) - UNIX_TIMESTAMP(MIN(von)) as total
+          , SUM(LEAST(runtime, UNIX_TIMESTAMP(bis) - UNIX_TIMESTAMP(von) )) as uptime
         FROM iplog_raw
         GROUP BY 1
         ) as x

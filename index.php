@@ -98,7 +98,6 @@
         <div class="round sub">
             <h2 class="header">IPv4 Addresses of the last 7 days</h2>
             <table>
-            <tr> <th>IP</th> <th>Duration</th> <th>Timeframe</th> </tr>
             <?php lastIPs(); ?>
             </table>
         </div>
