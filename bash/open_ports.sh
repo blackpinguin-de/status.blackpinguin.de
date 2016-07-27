@@ -2,7 +2,7 @@
 
 FILE=/rcl/www/status/bash/open_ports.txt
 
-if [ $(find $FILE -cmin +1) ] ; then
+if ( [ "$1" == "force" ] || [ $(find $FILE -cmin +1) ] ) ; then
 
   netstat -lntu | 
 #    grep  ':\*' | grep '[tu][cd]p' | grep -o ':[0-9]* ' | grep -o '[0-9]*' | sort | uniq > $FILE
