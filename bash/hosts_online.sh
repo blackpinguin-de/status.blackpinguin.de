@@ -2,7 +2,7 @@
 
 FILE=/rcl/www/status/bash/hosts_online.txt
 
-if [ $(find $FILE -cmin +1) ] ; then
+if ( [ "$1" == "force" ] || [ $(find $FILE -cmin +10) ] ) ; then
 
   {
   sudo -u root nmap -n -PO 192.168.4.1-15 192.168.4.18-20 -T5 --host-timeout 600ms --min-hostgroup 64 --min-parallelism 64 --max-retries 2 --max-rtt-timeout 600ms ;
