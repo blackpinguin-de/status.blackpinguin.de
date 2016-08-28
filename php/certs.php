@@ -1,7 +1,6 @@
 <?php
 
 // Certificates
-if (in_array($_SERVER['HTTP_HOST'], ['status.server', 'status.blackpinguin.de'])) {
 $crtFiles = array(
   '*.blackpinguin.de'      => '/rcl/certs/domain.crt',
   'xmpp.blackpinguin.de'   => '/rcl/certs/xmpp.crt',
@@ -42,9 +41,14 @@ $crtFiles = array(
 // 'vpn2.blackpinguin.de'   => '/svn/vpn/easy-rsa/keys/svn.blackpinguin.de.crt',
 // 'rcl.vpn2.blackpinguin.de'   => '/svn/vpn/easy-rsa/keys/robin.svn.blackpinguin.de.crt',
 );
-} else if ($_SERVER['HTTP_HOST'] === 'status.localhost') {
-    $crtFiles = ["*.blackpinguin.de" => '/rcl/www/cert/domain.crt'];
-} else {
+if ($_SERVER['HTTP_HOST'] === 'status.localhost') {
+    $crtFiles['*.blackpinguin.de'] = '/rcl/www/cert/domain.crt';
+    unset($crtFiles['xmpp.blackpinguin.de']);
+    unset($crtFiles['vpn.blackpinguin.de']);
+    unset($crtFiles['1000h.vpn.blackpinguin.de']);
+    unset($crtFiles['vpn2.blackpinguin.de']);
+    unset($crtFiles['rcl.vpn2.blackpinguin.de']);
+} else if (! in_array($_SERVER['HTTP_HOST'], ['status.server', 'status.blackpinguin.de'])) {
     $crtFiles = [];
 }
 
