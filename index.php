@@ -80,6 +80,14 @@
 
         </div>
 
+        <!-- Current Problems -->
+        <div class="round sub">
+            <h2 class="header">Unresolved Problems</h2>
+            <table>
+                <?php open_problems(); ?>
+            </table>
+        </div>
+
         <!-- Disk Usage -->
         <div class="round sub">
             <h2 class="header">Disk Usage</h2>
