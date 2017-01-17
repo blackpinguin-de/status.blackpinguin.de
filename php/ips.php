@@ -2,18 +2,17 @@
 
 // Map<IP, Hostname>
 $hosts = array(
-  '192.168.4.1' => 'Router',
-//  '192.168.4.2' => 'PC',        // d8:cb:8a:a3:fb:37 (eth)  Titan-5960X
-  '192.168.4.2' => 'PC',        // 88:88:88:88:87:88 (eth)  Titan-5960X
-  '192.168.4.3' => 'Server',    // e0:cb:4e:06:20:7e (eth)  EB1012
-  '192.168.4.4' => 'Laptop',    // 00:15:af:d8:ea:2f (wifi) e1000h
-
-  '192.168.4.5' => 'GameCube',  // 00:09:bf:01:c5:03 (eth)
-//'192.168.4.6' => 'Wii U',     // ---
-  '192.168.4.7' => 'PS4',       // 0c:fe:45:03:59:ac (eth)
-//'192.168.4.8' => 'XBoxOne',   // ---
-  '192.168.4.13' => 'PC [Pinguin]', // d0:50:99:92:7c:cb (eth)  Pinguin-G1840
-  '192.168.4.14' => 'TV',           // f4:7b:5e:46:17:ae (wifi)
+  '192.168.4.1' => 'Router',        // 38:10:d5:b8:7b:b8 (eth)  Fritz!Box 7490
+  '192.168.4.2' => 'PC',            // 88:88:88:88:87:88 (eth)  Titan-5960X
+  '192.168.4.3' => 'Server',        // e0:cb:4e:06:20:7e (eth)  EB1012
+  '192.168.4.4' => 'Laptop',        // 00:15:af:d8:ea:2f (wifi) e1000h
+  '192.168.4.5' => 'GameCube',      // 00:09:bf:01:c5:03 (eth)
+//'192.168.4.6' => 'Switch',        // ---
+  '192.168.4.7' => 'PS4',           // 0c:fe:45:03:59:ac (eth)
+//'192.168.4.8' => 'XBoxOne',       // ---
+  '192.168.4.12' => 'TV [R]',       // 30:a9:de:50:3e:0e (wifi) OK ODL 326450F-TIB
+  '192.168.4.13' => 'TV [K]',       // f4:7b:5e:46:17:ae (wifi) Samsung UE32EH5300
+  '192.168.4.14' => 'PC [Pinguin]', // d0:50:99:92:7c:cb (eth)  Pinguin-G1840
 //'192.168.4.17' => 'Server VPN',
   '192.168.4.18' => 'Laptop (vpn)',
   '192.168.4.19' => 'PC [Killer] (vpn)',
@@ -21,19 +20,23 @@ $hosts = array(
 
 // Map<Phy, Hostname>
 $macs = array(
-  '00:1f:1f:34:29:4c' => 'Router',
-  '00:e0:4c:68:1f:50' => 'PC [Killer]',  // Killer-6400XT
-//  'd8:cb:8a:a3:fb:37' => 'PC [Titan]',   // Titan-5960X
-  '88:88:88:88:87:88' => 'PC [Titan]',   // Titan-5960X
-  'd0:50:99:92:7c:cb' => 'PC [Pinguin]', // Pinguin-G1840
-//  '54:04:a6:f2:03:45' => 'PC [K]', // LADIGES-250X2 (K, Trojan)
-  'e0:cb:4e:06:20:7e' => 'Server',
-  '00:15:af:d8:ea:2f' => 'Laptop (wifi)',
-  '00:24:8C:25:B2:79' => 'Laptop (eth)',
-  '00:09:bf:01:c5:03' => 'Gamecube',
-  '0c:fe:45:03:59:ac' => 'PS4 (eth)',
-  '60:5b:b4:03:d1:97' => 'PS4 (wifi)',
-  'f4:7b:5e:46:17:ae' => 'TV',
+//'00:1f:1f:34:29:4c' => 'Router',         // (eth/wifi) Edimax
+  '38:10:d5:b8:7b:b8' => 'Router',         // (eth)  Fritz!Box 7490
+  '38:10:d5:b8:7b:ba' => 'Router (wifi)',  // (wifi) Fritz!Box 7490 2.4 GHz
+  '38:10:d5:b8:7b:bb' => 'Router (wifi)',  // (wifi) Fritz!Box 7490 5.0 GHz
+  '00:e0:4c:68:1f:50' => 'PC [Killer]',    // (eth)  Killer-6400XT
+//'d8:cb:8a:a3:fb:37' => 'PC [Titan]',     // (eth)  Titan-5960X (old MoBo)
+  '88:88:88:88:87:88' => 'PC [Titan]',     // (eth)  Titan-5960X
+  'd0:50:99:92:7c:cb' => 'PC [Pinguin]',   // (eth)  Pinguin-G1840
+//'54:04:a6:f2:03:45' => 'PC [K]',         // (eth)  LADIGES-250X2 (K, Trojan)
+  'e0:cb:4e:06:20:7e' => 'Server',         // (eth)  EB1012
+  '00:15:af:d8:ea:2f' => 'Laptop (wifi)',  // (wifi) EEE1000H
+  '00:24:8C:25:B2:79' => 'Laptop (eth)',   // (eth)  EEE1000H
+  '00:09:bf:01:c5:03' => 'GameCube',       // (eth)  GameCube
+  '0c:fe:45:03:59:ac' => 'PS4 (eth)',      // (eth)  PS4
+  '60:5b:b4:03:d1:97' => 'PS4 (wifi)',     // (wifi) PS4
+  '30:a9:de:50:3e:0e' => 'TV [R]',         // (wifi) OK ODL 326450F-TIB
+  'f4:7b:5e:46:17:ae' => 'TV [K]',         // (wifi) Samsung UE32EH5300
 );
 
 // IPs that are shown when they are offline
