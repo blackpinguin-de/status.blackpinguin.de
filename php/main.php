@@ -3,6 +3,7 @@
 require_once('config.php');
 require_once('util.php');
 
+require_once('problems.php');
 require_once('ips.php');
 require_once('certs.php');
 require_once('ports.php');
