@@ -68,18 +68,23 @@ function crtCheck(){
         $valid = array();
         $cas = array();
         foreach ($crtFiles as $domain => $file) {
-                $v = trim(@shell_exec("openssl x509 -noout -dates -in $file | grep 'notAfter' "
+		if (file_exists($file)) {
+                	$v = trim(@shell_exec("openssl x509 -noout -dates -in $file | grep 'notAfter' "
                                     . "| grep -o '[^=]*\$' | { read d ; date -d \"\$d\" +%s ; }"));
-                $ca = trim(@shell_exec("openssl x509 -noout -issuer -in $file | grep -o '/O=[^/]*/' "
+        	        $ca = trim(@shell_exec("openssl x509 -noout -issuer -in $file | grep -o '/O=[^/]*/' "
                                      . "| grep -o '[^=/]*/\$' | grep -o '^[^/]*'"));
-                $valid[$domain] = $v;
-                $cas[$domain] = ca($ca);
+	                $valid[$domain] = $v;
+                	$cas[$domain] = ca($ca);
+		} else {
+			$valid[$domain] = 0;
+			$cas[$domain] = "N/A";
+		}
         }
         asort($valid);
         foreach ($valid as $domain => $until) {
-                $date = date("Y-m-d H:i:s T", $until);
+                $date = ( $until > 0 ? date("Y-m-d H:i:s T", $until) : "N/A" );
                 $ca = $cas[$domain];
-                $duration = toDuration(round($until - time()));
+                $duration = ( $until > 0 ? toDuration(round($until - time())) : "N/A" );
 		$days = round($until - time()) / (60 * 60 * 24);
                 $color = ( $days >= 14 ? "green" : ( $days >= 7 ? "orange" : "red" ) );
                 echo "<tr>";
