@@ -71,8 +71,14 @@ function crtCheck(){
 		if (file_exists($file)) {
                 	$v = trim(@shell_exec("openssl x509 -noout -dates -in $file | grep 'notAfter' "
                                     . "| grep -o '[^=]*\$' | { read d ; date -d \"\$d\" +%s ; }"));
-        	        $ca = trim(@shell_exec("openssl x509 -noout -issuer -in $file | grep -o '/O=[^/]*/' "
-                                     . "| grep -o '[^=/]*/\$' | grep -o '^[^/]*'"));
+			# old format: issuer= /C=US/O=Let's Encrypt/CN=Let's Encrypt Authority X3
+			# old format: issuer= /O=CAcert Inc./OU=http://www.CAcert.org/CN=CAcert Class 3 Root
+			# new format: issuer=C = US, O = Let's Encrypt, CN = Let's Encrypt Authority X3
+			# new format: issuer=O = CAcert Inc., OU = http://www.CAcert.org, CN = CAcert Class 3 Root
+        	        $ca = trim(@shell_exec("openssl x509 -noout -issuer -in $file "
+                                     . "| grep -Eo '[/= ]O ?= ?[^=/,]*[/,]' "
+                                     . "| grep -o '[^=/,]*[/,]\$' "
+                                     . "| grep -o '^[^/,]*'"));
 	                $valid[$domain] = $v;
                 	$cas[$domain] = ca($ca);
 		} else {
