@@ -86,7 +86,7 @@ function crtCheck(){
                 $ca = $cas[$domain];
                 $duration = ( $until > 0 ? toDuration(round($until - time())) : "N/A" );
 		$days = round($until - time()) / (60 * 60 * 24);
-                $color = ( $days >= 14 ? "green" : ( $days >= 7 ? "orange" : "red" ) );
+                $color = ( $days >= 22 ? "green" : ( $days >= 20 ? "orange" : "red" ) );
                 echo "<tr>";
                 echo "<td>$domain</td>";
                 echo "<td>$ca</td>";
