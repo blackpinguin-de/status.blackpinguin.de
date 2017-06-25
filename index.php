@@ -36,14 +36,14 @@
                         <tr> <td style="visibility: hidden;">&nbsp;</td> </tr>
                         <tr> <td>Distribution:</td> <td><?php echo $distro; ?></td> </tr>
                         <tr> <td>Runlevel:</td> <td><?php echo $runlevel; ?></td> </tr>
-                        <tr> <td>Installation:</td> <td>2014-09-19 21:49:37 CEST</td> </tr>
+                        <tr> <td>Installation:</td> <td>2017-06-18 20:36:16 CEST</td> </tr>
                         <tr> <td>Last Upgrade:</td> <td><?php echo $apt; ?></td> </tr>
                         <tr> <td>Last Backup:</td> <td><?php echo $last_backup; ?></td> </tr>
                         <tr> <td>Last Off-site Backup:</td> <td><?php echo $last_offsite_backup; ?></td> </tr>
                         <tr> <td style="visibility: hidden;">&nbsp;</td> </tr>
-                        <tr> <td>Hardware:</td> <td>ASUS EeeBox EB1012</td> </tr>
-                        <tr> <td>Acquisition:</td> <td>2010-01-08</td> </tr>
-                        <tr> <td>Last Maintenance:</td> <td>2015-08-04</td> </tr>
+                        <tr> <td>Hardware:</td> <td>Ryzen 7 1700, ASUS Prime B350M-A</td> </tr>
+                        <tr> <td>Acquisition:</td> <td>2017-06-04</td> </tr>
+                        <tr> <td>Last Maintenance:</td> <td>2017-06-24</td> </tr>
                         <tr> <td>Last Reboot:</td> <td><?php echo $boottime; ?></td> </tr>
                     </table>
                 </div>

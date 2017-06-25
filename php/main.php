@@ -30,6 +30,3 @@ $osbut2 = strtotime('+30 days', strtotime($last_offsite_backup));
 $apt = "<span class='".($aptt  < $now ? ($aptt2 < $now ? 'red' : 'orange') : 'green')."'>$apt</span>";
 $last_backup = "<span class='".($backt < $now ? ($backt2 < $now ? 'red' : 'orange') : 'green')."'>$last_backup</span>";
 $last_offsite_backup = "<span class='".($osbut < $now ? ($osbut2 < $now ? 'red' : 'orange') : 'green')."'>$last_offsite_backup</span>";
-
-
-?>

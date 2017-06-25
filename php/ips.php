@@ -4,7 +4,7 @@
 $hosts = array(
   '192.168.4.1' => 'Router',        // 38:10:d5:b8:7b:b8 (eth)  Fritz!Box 7490
   '192.168.4.2' => 'PC',            // 88:88:88:88:87:88 (eth)  Titan-5960X
-  '192.168.4.3' => 'Server',        // e0:cb:4e:06:20:7e (eth)  EB1012
+  '192.168.4.3' => 'Server',        // e0:cb:4e:06:20:7e (eth)  Prime-1700
   '192.168.4.4' => 'Laptop',        // 00:15:af:d8:ea:2f (wifi) e1000h
   '192.168.4.5' => 'GameCube',      // 00:09:bf:01:c5:03 (eth)
 //'192.168.4.6' => 'Switch',        // ---
@@ -28,8 +28,9 @@ $macs = array(
 //'d8:cb:8a:a3:fb:37' => 'PC [Titan]',     // (eth)  Titan-5960X (old MoBo)
   '88:88:88:88:87:88' => 'PC [Titan]',     // (eth)  Titan-5960X
   'd0:50:99:92:7c:cb' => 'PC [Pinguin]',   // (eth)  Pinguin-G1840
+  '60:45:cb:60:4d:43' => 'Server',         // (eth)  Prime-1700
 //'54:04:a6:f2:03:45' => 'PC [K]',         // (eth)  LADIGES-250X2 (K, Trojan)
-  'e0:cb:4e:06:20:7e' => 'Server',         // (eth)  EB1012
+  'e0:cb:4e:06:20:7e' => 'Server [old]',   // (eth)  EB1012
   '00:15:af:d8:ea:2f' => 'Laptop (wifi)',  // (wifi) EEE1000H
   '00:24:8C:25:B2:79' => 'Laptop (eth)',   // (eth)  EEE1000H
   '00:09:bf:01:c5:03' => 'GameCube',       // (eth)  GameCube
@@ -158,7 +159,7 @@ function lastIPs(){
             ORDER BY bis desc;
     ";
     $res = $mysqli->query($qr);
-    if($res === FALSE){exit("ERROR: MySQL query error");}
+    //if($res === FALSE){ exit("ERROR: MySQL query error"); }
     if($res === FALSE){ echo "<tr><td colspan='4'>MySQL query error</td></tr>"; return; }
 
     $first = true;
@@ -274,6 +275,3 @@ function ipDowntime(){
         return;
     }
 }
-
-
-?>

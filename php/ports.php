@@ -54,6 +54,3 @@ function privateServices(){
         foreach($priv as $row){ portCheck($row); }
 }
 
-
-
-?>

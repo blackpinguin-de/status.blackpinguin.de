@@ -101,6 +101,3 @@ function crtCheck(){
                 echo "</tr>";
         }
 }
-
-
-?>

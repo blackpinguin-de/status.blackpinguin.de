@@ -24,7 +24,7 @@ function open_problems(){
         ORDER BY since DESC;
     ";
     $res = $mysqli->query($qr);
-    if ($res === FALSE) { exit("ERROR: MySQL query error"); }
+    //if ($res === FALSE) { exit("ERROR: MySQL query error"); }
     if ($res === FALSE) { echo "<tr><td colspan='4'>MySQL query error</td></tr>"; return; }
     $body  = "";
     while($row = $res->fetch_assoc()){
@@ -39,6 +39,3 @@ function open_problems(){
     echo "<tr> <th>Since</th> <th>Type</th> <th>Problem</th> <th>Message</th> </tr>";
     echo $body;
 }
-
-
-?>

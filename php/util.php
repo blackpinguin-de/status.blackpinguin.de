@@ -19,5 +19,3 @@ function toDuration($seconds, $min = "d"){
         if($seconds < 0){$dur = "- " . $dur;}
         return $dur;
 }
-
-?>

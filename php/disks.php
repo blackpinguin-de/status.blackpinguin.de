@@ -18,28 +18,48 @@ function diskBars(){
     $memory = trim(@shell_exec("/rcl/www/status/bash/disks_memory.sh"));
 //  $swap = trim(@shell_exec("/rcl/www/status/bash/disks_swap.sh"));
 
-    $data = array();
+    $load_disks = function ($file) {
+      $lines = explode("\n", trim($file));
+      foreach($lines as $line){
+        $x = explode(' ', trim($line));
+        $size = (int) $x[0];
+        $used = (int) $x[1];
+        $name = $x[2];
+        $perc = $used / $size * 100.0;
+        yield $name => [ $size, $used, $perc, true ];
+      }
+    };
+
+    $data = [];
 
     if (in_array($_SERVER['HTTP_HOST'], ['status.server', 'status.blackpinguin.de'])) {
         // allways show
-        $data["/ext/media"] = array(433491744, 0.0, 0.0, false);
-        $data["/ext/images"] = array(1056894132, 0.0, 0.0, false);
-        $data["/ext/encrypted"] = array(186623424, 0.0, 0.0, false);
-        $data["/ext/backup"] = array(252687936, 0.0, 0.0, false);
+        $data["/ext/media"]     = [ 433491744,  0.0, 0.0, false ];
+        $data["/ext/images"]    = [ 1056894132, 0.0, 0.0, false ];
+        $data["/ext/encrypted"] = [ 186623424,  0.0, 0.0, false ];
+        $data["/ext/backup"]    = [ 252687936,  0.0, 0.0, false ];
     }
 
     $lines = explode("\n",$diskspace);
-    foreach($lines as $line){
-        $x = explode(' ', $line);
-        $size = (int)$x[0];
-        $used = (int)$x[1];
-        $name = $x[2];
-        $perc = $used / $size * 100.0;
-        $data[$name] = array($size, $used, $perc, true);
+    foreach($load_disks($diskspace) as $name => $d) {
+      $data[$name] = $d;
     }
     $max = max(array_map(function($x){return $x[0];}, $data));
 
     ksort($data);
+
+    // unmounted disks
+    $unmounted = [];
+    foreach ($data as $name => $d) { if (! $d[3]) { $unmounted[$name] = true; }; }
+    if ($unmounted) {
+      $old_disks = file_get_contents("/rcl/www/status/bash/disks_hdd2.txt");
+      foreach($load_disks($old_disks) as $name => $d) {
+        if (isset($unmounted[$name])) {
+          $d[3] = false;
+          $data[$name] = $d;
+        }
+      }
+    }
 
     $data["swap"] = array(0, 0, 0, true);
     $data["memory"] = array(0, 0, 0, true);
@@ -58,12 +78,17 @@ function diskBars(){
 
     echo "<div class='disk-img'>";
     foreach($data as $name => $x){
-        $size = $x[0] / $max * 100.0;
-        if($x[3]){
-            $used = round($x[1]/1048576, 2);
-            $total = round($x[0]/1048576, 2);
-            $free = round(($x[0]-$x[1])/1048576, 2);
-            $title = "For '$name' $used GiB from a total of $total GiB is in use (".round($x[2],2)."%), which leaves $free GiB free (".round(100.0 - $x[2],2)."%).";
+        $size  = $x[0] / $max * 100.0;
+        $used  = round($x[1] / 1048576, 2);
+        $total = round($x[0] / 1048576, 2);
+        $free  = round(($x[0] - $x[1]) / 1048576, 2);
+        // mounted?
+        if ($x[3]) {
+            $title = "For '$name' $used GiB from a total of $total GiB is in use ("
+		. round($x[2], 2)
+                . "%), which leaves $free GiB free ("
+                . round(100.0 - $x[2], 2)."%)."
+            ;
             $color = diskColor(4.0 - $x[2] * 0.04);
             echo "<div style='width:$size%; background-color: $color;' title=\"$title\">";
             echo "<div style='width:". $x[2] ."%;'>";
@@ -71,15 +96,25 @@ function diskBars(){
             echo "$used of $total";
             echo " GiB</span></span></div></div>";
         }
-        else{
-            $total = round($x[0]/1048576, 2);
-            $title = "The device '$name' is currently not mounted. It has a total size of $total GiB.";
-            echo "<div style='width:$size%' class='unmounted' title=\"$title\">";
-            echo "<span>$name<span>$total";
-            echo " GiB - not mounted</span></span></div>";
+        // unmounted
+        else {
+            $title = "The device '$name' is currently not mounted. It has a total size of $total GiB";
+            // with data from last mount
+            if ($x[2] !== 0) {
+                $title .= " and used $used GiB (" . round($x[2], 2) . "%) the last time it was mounted, "
+                  . "which leaved $free GiB free (" . round(100.0 - $x[2], 2) . "%)"
+                ;
+                echo "<div style='width:$size%' class='unmounted known' title=\"$title.\">";
+                echo "<div style='width:". $x[2] ."%;'>";
+                echo "<span>$name<span>$used of $total";
+                echo " GiB - not mounted</span></span></div></div>";
+            } else {
+                echo "<div style='width:$size%' class='unmounted' title=\"$title.\">";
+                echo "<span>$name<span>$total";
+                echo " GiB - not mounted</span></span></div>";
+            }
         }
     }
     echo "</div>";
 }
 
-?>
