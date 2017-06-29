@@ -62,17 +62,20 @@ function diskBars(){
     }
 
     $data["swap"] = array(0, 0, 0, true);
-    $data["memory"] = array(0, 0, 0, true);
+    $data["memory"] = array(0, 0, null, true);
 
     foreach(explode("\n", $memory) as $line){
         $x = explode(" ", $line);
-        if($x[0] === "M"){ $data["memory"][0] = (int) $x[1]; }
+        if ($x[0] === "M") {
+            $data["memory"][0] = (int) $x[1];
+            $data["memory"][1] = (int) $x[2];
+        }
         else if($x[0] === "b"){ $data["memory"][2] = (int) $x[2]; }
         else if($x[0] === "S"){ $data["swap"][0] = (int) $x[1]; $data["swap"][2] = (int) $x[3]; }
     }
 
     $data["swap"][1] = ($data["swap"][0] - $data["swap"][2]);
-    $data["memory"][1] = ($data["memory"][0] - $data["memory"][2]);
+    if ($data["memory"][2] !== null) { $data["memory"][1] = ($data["memory"][0] - $data["memory"][2]); }
     $data["swap"][2] = $data["swap"][1] / $data["swap"][0] * 100.0;
     $data["memory"][2] = $data["memory"][1] / $data["memory"][0] * 100.0;
 
