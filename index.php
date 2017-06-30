@@ -36,7 +36,7 @@
                         <tr> <td style="visibility: hidden;">&nbsp;</td> </tr>
                         <tr> <td>Distribution:</td> <td><?php echo $distro; ?></td> </tr>
                         <tr> <td>Runlevel:</td> <td><?php echo $runlevel; ?></td> </tr>
-                        <tr> <td>Installation:</td> <td>2017-06-18 20:36:16 CEST</td> </tr>
+                        <tr> <td>Installation:</td> <td>2017-06-27 20:20:33 CEST</td> </tr>
                         <tr> <td>Last Upgrade:</td> <td><?php echo $apt; ?></td> </tr>
                         <tr> <td>Last Backup:</td> <td><?php echo $last_backup; ?></td> </tr>
                         <tr> <td>Last Off-site Backup:</td> <td><?php echo $last_offsite_backup; ?></td> </tr>

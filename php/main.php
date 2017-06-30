@@ -15,8 +15,8 @@ $runlevel = trim(@shell_exec("who -r | grep -Po 'run-level \\d ' | grep -Po '\\d
 $boottime = trim(@shell_exec("x=$(LANG='en_US.utf8'; who -b | grep -Po 'boot .*' | grep -Po ' .*' | grep -Po '20\\d\\d-\\d\\d-\\d\\d \\d\d:\\d\\d.*') ; date -d \"\$x GMT+2\" +'%F %T %Z'"));
 
 $apt = trim(@shell_exec('sec=$(stat -c %Y /var/cache/apt/) ; date -d "@$sec" +"%Y-%m-%d %H:%M:%S %Z"'));
-$last_backup = trim(@file_get_contents("/rcl/logs/last_backup.txt"));
-$last_offsite_backup = trim(@file_get_contents("/rcl/logs/last_offsite_backup.txt"));
+$last_backup = trim(@file_get_contents("/rcl/logs/backup/last.txt"));
+$last_offsite_backup = trim(@file_get_contents("/rcl/logs/backup/last_offsite.txt"));
 $now   = time();
 // yellow after:
 $aptt  = strtotime('+1 week', strtotime($apt));
