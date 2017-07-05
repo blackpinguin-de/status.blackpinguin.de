@@ -19,7 +19,7 @@ $pub = array(
 // Private Services
 $priv = array(
 //array('FTP', 21, 'tcp'),
-  array('DNS', 53, 'udp'),
+//  array('DNS', 53, 'udp'),
   array('MySQL', 3306, 'tcp'),
 //array('SMTPS', 465, 'tcp'),
   array('Samba', 445, 'tcp'),

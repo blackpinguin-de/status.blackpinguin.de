@@ -127,8 +127,8 @@ function hostCheck(){
         // sort by IP adress
         $ips = array_keys($stati);
         usort($ips, function ($a, $b) {
-                $a = (int)(explode('.', $a)[3]);
-                $b = (int)(explode('.', $b)[3]);
+                $a = (int)(explode('.', $a)[3]) + (int)(explode('.', $a)[2]) * 1000;
+                $b = (int)(explode('.', $b)[3]) + (int)(explode('.', $b)[2]) * 1000;
                 return ( $a === $b ? 0 : ( $a < $b ? -1 : 1 ) );
         });
 

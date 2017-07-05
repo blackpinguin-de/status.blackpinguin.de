@@ -17,7 +17,7 @@ if ( [ "$1" == "force" ] || [ $(find $FILE -cmin +10) ] ) ; then
   ip neigh show |
     grep 'lladdr' |
     grep -E '(REACHABLE|DELAY|PERMANENT)' |
-    sed -re 's/^.*(192\.168\.[0-9]{1,3}\.[0-9]{1,3}) dev ([^ ]+[0-9]) lladdr ([0-9a-f]{2}(\:[0-9a-f]{2}){5}) .*/\1,\2,\3/' \
+    sed -re 's/^.*(192\.168\.[0-9]{1,3}\.[0-9]{1,3}|[0-9a-f\:]+\:[0-9a-f\:]) dev ([^ ]+[0-9]) lladdr ([0-9a-f]{2}(\:[0-9a-f]{2}){5}) .*/\1,\2,\3/' \
     >> $FILE
 
   sudo -k
