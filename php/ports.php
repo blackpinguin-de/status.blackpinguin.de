@@ -6,22 +6,22 @@ $pub = array(
   array('HTTPS', 443, 'tcp'),
   array('SSH', 22, 'tcp'),
   array('SMTP', 25, 'tcp'),
+  array('SMTPS', 465, 'tcp'),
   array('SMTP-MSA', 587, 'tcp'),
   array('POP3S', 995, 'tcp'),
   array('XMPP C2S', 5222, 'tcp'),
   array('XMPP S2S', 5269, 'tcp'),
   array('Tor Dir', 60001, 'tcp'),
   array('Tor OR', 60002, 'tcp'),
-  array('OpenVPN 1', 8080, 'tcp'),
-  array('OpenVPN 2', 8080, 'udp'),
+#  array('OpenVPN 1', 8080, 'tcp'),
+  array('OpenVPN', 8080, 'udp'),
 );
 
 // Private Services
 $priv = array(
 //array('FTP', 21, 'tcp'),
-//  array('DNS', 53, 'udp'),
+//array('DNS', 53, 'udp'),
   array('MySQL', 3306, 'tcp'),
-//array('SMTPS', 465, 'tcp'),
   array('Samba', 445, 'tcp'),
   array('Cups', 631, 'tcp'),
 //array('Sane', 6566, 'tcp'),

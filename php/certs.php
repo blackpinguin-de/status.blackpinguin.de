@@ -35,11 +35,11 @@ $crtFiles = array(
 //      => '/rcl/certs/letsencrypt/crt/blackpinguin.de/mcheck.crt',
 //  "<a href=''>xmpp.blackpinguin.de</a>"
 //      => '/rcl/certs/letsencrypt/crt/blackpinguin.de/xmpp.crt',
+  "mail.blackpinguin.de"   => '/rcl/certs/letsencrypt/crt/blackpinguin.de/mail.crt',
 
-  'vpn.blackpinguin.de'    => '/rcl/conf/vpn/easy-rsa/keys/server.crt',
-//'1000h.vpn.blackpinguin.de'  => '/rcl/conf/vpn/easy-rsa/keys/client_1000h.crt',
-// 'vpn2.blackpinguin.de'   => '/svn/vpn/easy-rsa/keys/svn.blackpinguin.de.crt',
-// 'rcl.vpn2.blackpinguin.de'   => '/svn/vpn/easy-rsa/keys/robin.svn.blackpinguin.de.crt',
+  'vpn.blackpinguin.de'    => '/rcl/certs/openvpn/vpn.bp.de/keys/vpn.blackpinguin.de.crt',
+//'e1000h.vpn.blackpinguin.de'  => '/rcl/certs/openvpn/vpn.bp.de/keys/e1000h.blackpinguin.de.crt',
+//'killer.vpn.blackpinguin.de'  => '/rcl/certs/openvpn/vpn.bp.de/keys/killer.blackpinguin.de.crt',
 );
 if ($_SERVER['HTTP_HOST'] === 'status.localhost') {
     $crtFiles['*.blackpinguin.de'] = '/rcl/www/cert/domain.crt';

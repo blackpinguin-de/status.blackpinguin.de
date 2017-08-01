@@ -43,7 +43,7 @@
                         <tr> <td style="visibility: hidden;">&nbsp;</td> </tr>
                         <tr> <td>Hardware:</td> <td>Ryzen 7 1700, ASUS Prime B350M-A</td> </tr>
                         <tr> <td>Acquisition:</td> <td>2017-06-04</td> </tr>
-                        <tr> <td>Last Maintenance:</td> <td>2017-06-24</td> </tr>
+                        <tr> <td>Last Maintenance:</td> <td>2017-07-08</td> </tr>
                         <tr> <td>Last Reboot:</td> <td><?php echo $boottime; ?></td> </tr>
                     </table>
                 </div>
