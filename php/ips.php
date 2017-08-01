@@ -165,7 +165,23 @@ function lastIPs(){
     $first = true;
     $one_offline = false;
     $body = "";
+    $from = null;
+    $to = null;
+    
     while($row = $res->fetch_assoc()){
+        // long offline period between IPs
+        $from = strtotime($row['bis']);
+        if ($from && ($dur = $to - $from) >= 30*59) {
+			$dur = breakDuration(toDuration($dur, 'h'));
+			$body .= "<tr class='red'><td></td><td></td><td>$dur</td><td>";
+			$body .= breakDate(date("Y-m-d H:i:s T",$from));
+			$body .= "&nbsp;&ndash; ";
+			$body .= breakDate(date("Y-m-d H:i:s T",$to));
+			$body .= "</td></tr>\n";
+			$one_offline = true;
+		}
+        $to = strtotime($row['von']);
+		
 		$h = 24 * (int) preg_replace("|^(?:([0-9]+)d )?[0-9]+h [0-9]+m$|","$1",$row['duration']);
 		$h += (int) preg_replace("|^(?:[0-9]+d )?([0-9]+)h [0-9]+m$|","$1",$row['duration']);
 		$offline = $row['offline'];
@@ -223,7 +239,6 @@ function topIPs(){
         $res = $mysqli->query($qr);
         if($res === FALSE){ echo("<tr><td colspan='6'>MySQL query error</td></tr>"); return; }
 
-        $first = true;
         while($row = $res->fetch_assoc()){
                 echo  "<tr";
                 $ip = $row['ip'];
