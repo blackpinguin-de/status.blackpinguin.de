@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -127,9 +126,9 @@
     <!-- author -->
     <!-- author and creative commons licence information -->
     <div class="footer">
-        <a id="w3c" title="Valid HTML 4.01 Transitional" href="http://validator.w3.org/check?uri=referer" target="_blank"></a>
-        This page was created by <a class="footer" href="https://rcl.blackpinguin.de/" target="_blank">Robin&nbsp;Christopher&nbsp;Ladiges</a>
-        <a id="cc" title="cc by-sa" href="https://creativecommons.org/licenses/by-sa/3.0/de/" target="_blank"></a>
+        <a id="w3c" title="Valid HTML 4.01 Transitional" href="http://validator.w3.org/check?uri=referer" target="_blank" rel="noopener"></a>
+        This page was created by <a class="footer" href="https://rcl.blackpinguin.de/" target="_blank" rel="noopener">Robin&nbsp;Christopher&nbsp;Ladiges</a>
+        <a id="cc" title="cc by-sa" href="https://creativecommons.org/licenses/by-sa/3.0/de/" target="_blank" rel="noopener"></a>
         <!-- This page (not the page and content it's linking to) is under creative commons by-sa 3.0 de license, you can read it here: https://creativecommons.org/licenses/by-sa/3.0/de/legalcode -->
     </div>
 

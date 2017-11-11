@@ -58,7 +58,7 @@ $cas = array(
 );
 function ca($name){
         global $cas;
-        return isset($cas[$name]) ? "<a href='".$cas[$name]."' target='_blank'>$name</a>" : $name;
+        return isset($cas[$name]) ? "<a href='".$cas[$name]."' target='_blank' rel='noopener'>$name</a>" : $name;
 }
 
 
