@@ -40,6 +40,17 @@ $crtFiles = array(
   'vpn.blackpinguin.de'    => '/rcl/certs/openvpn/vpn.bp.de/keys/vpn.blackpinguin.de.crt',
 //'e1000h.vpn.blackpinguin.de'  => '/rcl/certs/openvpn/vpn.bp.de/keys/e1000h.blackpinguin.de.crt',
 //'killer.vpn.blackpinguin.de'  => '/rcl/certs/openvpn/vpn.bp.de/keys/killer.blackpinguin.de.crt',
+
+  // S/MIME
+  "E-Mail: <a href='//ext.blackpinguin.de/certs/rclbp.smime'>rcl@bp.de</a>" => '/rcl/www/ext/certs/rclbp.smime',
+  "E-Mail: <a href='//ext.blackpinguin.de/certs/rlweb.smime'>r.l@web.de</a>" => '/rcl/www/ext/certs/rlweb.smime',
+
+  // GPG
+  "E-Mail: <a href='//ext.blackpinguin.de/certs/rclbp.pgp'>rcl@bp.de</a>" => '/rcl/www/ext/certs/rclbp.pgp',
+  "E-Mail: <a href='//ext.blackpinguin.de/certs/rlweb.pgp'>r.l@web.de</a>" => '/rcl/www/ext/certs/rlweb.pgp',
+  "E-Mail: <a href='//ext.blackpinguin.de/certs/bpweb.pgp'>b_p@web.de</a>" => '/rcl/www/ext/certs/bpweb.pgp',
+  "E-Mail: <a href='//ext.blackpinguin.de/certs/clweb.pgp'>c_l@web.de</a>" => '/rcl/www/ext/certs/clweb.pgp',
+//"E-Mail: <a href='//ext.blackpinguin.de/certs/rlhaw.pgp'>r.l@hawhh.de</a>" => '/rcl/www/ext/certs/rlhaw.pgp',
 );
 if ($_SERVER['HTTP_HOST'] === 'status.localhost') {
     $crtFiles['*.blackpinguin.de'] = '/rcl/www/cert/domain.crt';
@@ -68,23 +79,32 @@ function crtCheck(){
         $valid = array();
         $cas = array();
         foreach ($crtFiles as $domain => $file) {
-		if (file_exists($file)) {
-                	$v = trim(@shell_exec("openssl x509 -noout -dates -in $file | grep 'notAfter' "
-                                    . "| grep -o '[^=]*\$' | { read d ; date -d \"\$d\" +%s ; }"));
-			# old format: issuer= /C=US/O=Let's Encrypt/CN=Let's Encrypt Authority X3
-			# old format: issuer= /O=CAcert Inc./OU=http://www.CAcert.org/CN=CAcert Class 3 Root
-			# new format: issuer=C = US, O = Let's Encrypt, CN = Let's Encrypt Authority X3
-			# new format: issuer=O = CAcert Inc., OU = http://www.CAcert.org, CN = CAcert Class 3 Root
-        	        $ca = trim(@shell_exec("openssl x509 -noout -issuer -in $file "
-                                     . "| grep -Eo '[/= ]O ?= ?[^=/,]*[/,]' "
-                                     . "| grep -o '[^=/,]*[/,]\$' "
-                                     . "| grep -o '^[^/,]*'"));
-	                $valid[$domain] = $v;
-                	$cas[$domain] = ca($ca);
-		} else {
+		if (! file_exists($file)) {
 			$valid[$domain] = 0;
 			$cas[$domain] = "N/A";
+			continue;
 		}
+
+		$ext = [];
+		preg_match("@[^\.]+$@", $file, $ext);
+		$pgp = count($ext) >= 1 && $ext[0] === 'pgp';
+
+		$cmd = "openssl x509 -noout -dates -in $file | grep 'notAfter' | grep -o '[^=]*\$'";
+		if ($pgp) {
+			$cmd = "pgpdump $file | awk '/key expiration time/{getline; print}' | head -n 1 | sed -n 's/.*Time - //p'";
+		}
+		$v = trim(@shell_exec("$cmd | { read d ; date -d \"\$d\" +%s ; }"));
+		# old format: issuer= /C=US/O=Let's Encrypt/CN=Let's Encrypt Authority X3
+		# old format: issuer= /O=CAcert Inc./OU=http://www.CAcert.org/CN=CAcert Class 3 Root
+		# new format: issuer=C = US, O = Let's Encrypt, CN = Let's Encrypt Authority X3
+		# new format: issuer=O = CAcert Inc., OU = http://www.CAcert.org, CN = CAcert Class 3 Root
+		$ca = trim(@shell_exec("openssl x509 -noout -issuer -in $file "
+                                    . "| grep -Eo '[/= ]O ?= ?[^=/,]*[/,]' "
+                                    . "| grep -o '[^=/,]*[/,]\$' "
+                                    . "| grep -o '^[^/,]*'"));
+		$valid[$domain] = $v;
+		if ($pgp) { $cas[$domain] = "GnuPG"; }
+		else { $cas[$domain] = ca($ca); }
         }
         asort($valid);
         foreach ($valid as $domain => $until) {
