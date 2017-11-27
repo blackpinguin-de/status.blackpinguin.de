@@ -95,7 +95,7 @@
 
         <!-- Certificates -->
         <div class="round sub">
-            <h2 class="header">X.509 Certificates</h2>
+            <h2 class="header">X.509 and PGP Certificates</h2>
             <table>
             <tr> <th>Domain</th> <th>Certificate Authority</th> <th>Valid For</th> <th>Valid Until</th> </tr>
             <?php crtCheck(); ?>
