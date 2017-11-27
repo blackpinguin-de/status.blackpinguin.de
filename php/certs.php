@@ -76,6 +76,7 @@ function ca($name){
 
 function crtCheck(){
         global $crtFiles;
+	global $now;
         $valid = array();
         $cas = array();
         foreach ($crtFiles as $domain => $file) {
@@ -110,8 +111,8 @@ function crtCheck(){
         foreach ($valid as $domain => $until) {
                 $date = ( $until > 0 ? date("Y-m-d H:i:s T", $until) : "N/A" );
                 $ca = $cas[$domain];
-                $duration = ( $until > 0 ? toDuration(round($until - time())) : "N/A" );
-		$days = round($until - time()) / (60 * 60 * 24);
+                $duration = ( $until > 0 ? toDuration(round($until - $now)) : "N/A" );
+		$days = round($until - $now) / (60 * 60 * 24);
                 $color = ( $days >= 22 ? "green" : ( $days >= 20 ? "orange" : "red" ) );
                 echo "<tr>";
                 echo "<td>$domain</td>";
