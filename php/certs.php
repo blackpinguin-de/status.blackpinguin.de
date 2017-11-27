@@ -37,19 +37,19 @@ $crtFiles = array(
 //      => '/rcl/certs/letsencrypt/crt/blackpinguin.de/xmpp.crt',
   "mail.blackpinguin.de"   => '/rcl/certs/letsencrypt/crt/blackpinguin.de/mail.crt',
 
-  'vpn.blackpinguin.de'    => '/rcl/certs/openvpn/vpn.bp.de/keys/vpn.blackpinguin.de.crt',
-//'e1000h.vpn.blackpinguin.de'  => '/rcl/certs/openvpn/vpn.bp.de/keys/e1000h.blackpinguin.de.crt',
-//'killer.vpn.blackpinguin.de'  => '/rcl/certs/openvpn/vpn.bp.de/keys/killer.blackpinguin.de.crt',
+  'vpn.blackpinguin.de' => '/rcl/certs/openvpn/vpn.bp.de/keys/vpn.blackpinguin.de.crt',
+  'VPN Client 1'        => '/rcl/certs/openvpn/vpn.bp.de/keys/e1000h.vpn.blackpinguin.de.crt',
+  'VPN Client 2'        => '/rcl/certs/openvpn/vpn.bp.de/keys/killer.vpn.blackpinguin.de.crt',
 
   // S/MIME
-  "E-Mail: <a href='//ext.blackpinguin.de/certs/rclbp.smime'>rcl@bp.de</a>" => '/rcl/www/ext/certs/rclbp.smime',
+  "E-Mail: <a href='//ext.blackpinguin.de/certs/rclbp.smime'>rcl@bp.de</a>"  => '/rcl/www/ext/certs/rclbp.smime',
   "E-Mail: <a href='//ext.blackpinguin.de/certs/rlweb.smime'>r.l@web.de</a>" => '/rcl/www/ext/certs/rlweb.smime',
 
   // GPG
-  "E-Mail: <a href='//ext.blackpinguin.de/certs/rclbp.pgp'>rcl@bp.de</a>" => '/rcl/www/ext/certs/rclbp.pgp',
-  "E-Mail: <a href='//ext.blackpinguin.de/certs/rlweb.pgp'>r.l@web.de</a>" => '/rcl/www/ext/certs/rlweb.pgp',
-  "E-Mail: <a href='//ext.blackpinguin.de/certs/bpweb.pgp'>b_p@web.de</a>" => '/rcl/www/ext/certs/bpweb.pgp',
-  "E-Mail: <a href='//ext.blackpinguin.de/certs/clweb.pgp'>c_l@web.de</a>" => '/rcl/www/ext/certs/clweb.pgp',
+  "E-Mail: <a href='//ext.blackpinguin.de/certs/rclbp.pgp'>rcl@bp.de</a>"    => '/rcl/www/ext/certs/rclbp.pgp',
+  "E-Mail: <a href='//ext.blackpinguin.de/certs/rlweb.pgp'>r.l@web.de</a>"   => '/rcl/www/ext/certs/rlweb.pgp',
+  "E-Mail: <a href='//ext.blackpinguin.de/certs/bpweb.pgp'>b_p@web.de</a>"   => '/rcl/www/ext/certs/bpweb.pgp',
+  "E-Mail: <a href='//ext.blackpinguin.de/certs/clweb.pgp'>c_l@web.de</a>"   => '/rcl/www/ext/certs/clweb.pgp',
 //"E-Mail: <a href='//ext.blackpinguin.de/certs/rlhaw.pgp'>r.l@hawhh.de</a>" => '/rcl/www/ext/certs/rlhaw.pgp',
 );
 if ($_SERVER['HTTP_HOST'] === 'status.localhost') {
