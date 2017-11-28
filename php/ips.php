@@ -228,7 +228,7 @@ function topIPs(){
 
         $qr = "
                 SELECT
-                  CONCAT(x.ip >> 24, '.', x.ip >> 16 & 255, '.', ((x.ip >> 8 & 255)>>4)<<4, '.0 /20') ip
+                  CONCAT(x.ip >> 24 & 255, '.', x.ip >> 16 & 255, '.', ((x.ip >> 8 & 255)>>4)<<4, '.0 /20') ip
                   , COUNT(*) anzahl
                   , COUNT(distinct x.ip) ips
                   , SUM(TIME_TO_SEC(TIMEDIFF(x.bis,x.von))) ord
