@@ -34,23 +34,27 @@ $priv = array(
 
 // Services that are currently running
 $openPorts = trim(@shell_exec("/rcl/www/status/bash/open_ports.sh"));
+$reachablePorts = trim(@shell_exec("/rcl/www/status/bash/reachable_ports.sh"));
 
-function portCheck($row){
+function portCheck($row, $pub) {
         global $openPorts;
-        echo "<tr><td>".$row[0]."</td><td>".$row[1]."/".$row[2]."</td>";
-        $status = preg_match("|:".$row[1]." ".$row[2]."|", $openPorts);
-        if($status) { echo "<td class='green'>Ok</td>"; }
+        global $reachablePorts;
+        list($name, $port, $proto) = $row;
+        echo "<tr><td>$name</td><td>$port/$proto</td>";
+        $open = preg_match("|:$port +$proto|", $openPorts);
+        $reachable = ! $pub || preg_match("@(^|[^0-9])$port/$proto +([a-z]+\|)*open( |\n|\r|\||$)@", $reachablePorts);
+        if ($open && $reachable) { echo "<td class='green'>Ok</td>"; }
+	elseif ($open && ! $reachable) { echo "<td class='red'>Unreachable</td>"; }
         else { echo "<td class='red'>Error</td>"; }
         echo "</tr>";
 }
 
 function publicServices(){
         global $pub;
-        foreach($pub as $row){ portCheck($row); }
+        foreach ($pub as $row) { portCheck($row, true); }
 }
 
 function privateServices(){
         global $priv;
-        foreach($priv as $row){ portCheck($row); }
+        foreach ($priv as $row) { portCheck($row, false); }
 }
-
