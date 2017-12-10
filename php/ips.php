@@ -92,8 +92,9 @@ function hostCheck(){
         // find online hosts
         foreach(explode("\n", $online) as $item) {
                 $tmp = explode(",", $item);
-                $ip = $tmp[0];
-                $mac = (count($tmp) >= 2 ? $tmp[2] : "");
+                $ip = trim($tmp[0]);
+                $mac = trim(count($tmp) >= 2 ? $tmp[2] : "");
+                if (empty($ip)) { continue; }
                 // mark as online
                 $stati[$ip] = true;
                 // name from mac
