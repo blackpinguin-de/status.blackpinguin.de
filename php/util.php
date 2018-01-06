@@ -1,6 +1,6 @@
 <?php
 
-function toDuration($seconds, $min = "d"){
+function toDuration($seconds, $min = "d") {
         $dur = "";
         $tm = round(abs($seconds) / 60);
         $th = floor($tm / 60);
@@ -18,4 +18,22 @@ function toDuration($seconds, $min = "d"){
         if($ta >= 1 || in_array($min, ["a"])){$dur = "${a}y " . $dur;}
         if($seconds < 0){$dur = "- " . $dur;}
         return $dur;
+}
+
+function toDate($date) {
+  return preg_replace("@([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}):[0-9]{2}@", "\$1", $date);
+}
+
+function breakDate($str){
+	$str = toDate($str);
+        return str_replace("-", "&#8209;", str_replace(" ", "&nbsp;", trim($str)));
+}
+
+function breakTime($str){
+	$str = toDate($str);
+        return str_replace("-", "&#8209;", str_replace(" CE", "&nbsp;CE", trim($str)));
+}
+
+function breakDuration($str){
+        return str_replace("d&nbsp;", "d ", str_replace(" ", "&nbsp;", $str));
 }

@@ -44,7 +44,7 @@ foreach ($files as $file => $name) {
 	$red    = $bu_times['red'. $offsite];
 
 	$clss = ($time >= $yellow ? 'green' : ($time >= $red ? 'orange' : 'red'));
-	$bu_files[$file] = [ 'name' => $name, 'age' => $age, 'date' => $date, 'class' => $clss ];
+	$bu_files[$name] = [ 'name' => $name, 'age' => $age, 'date' => toDate($date), 'class' => $clss, 'file' => $file ];
 	#echo "<tr> <td>$name</td> <td class='$clss'>$age</td> <td>$date</td> </tr>\n";
 }
 }
@@ -53,7 +53,7 @@ function last_backups()
 {
 load_backups();
 global $bu_files;
-foreach ($bu_files as $file => $x)
+foreach ($bu_files as $name => $x)
     echo "<tr>"
        . " <td>" . $x['name'] . "</td>"
        . " <td class='" . $x['class'] . "'>" . $x['age'] . "</td>"

@@ -39,6 +39,7 @@ $crtFiles = array(
 
   'vpn.blackpinguin.de'  => '/rcl/certs/openvpn/vpn.bp.de/keys/vpn.blackpinguin.de.crt',
   'VPN: Laptop'          => '/rcl/certs/openvpn/vpn.bp.de/keys/e1000h.vpn.blackpinguin.de.crt',
+  'VPN: PC'              => '/rcl/certs/openvpn/vpn.bp.de/keys/leitwolf.vpn.blackpinguin.de.crt',
   'VPN: Off-site Backup' => '/rcl/certs/openvpn/vpn.bp.de/keys/killer.vpn.blackpinguin.de.crt',
 
   // S/MIME
@@ -109,7 +110,7 @@ function crtCheck(){
         }
         asort($valid);
         foreach ($valid as $domain => $until) {
-                $date = ( $until > 0 ? date("Y-m-d H:i:s T", $until) : "N/A" );
+                $date = ( $until > 0 ? toDate(date("Y-m-d H:i:s T", $until)) : "N/A" );
                 $ca = $cas[$domain];
                 $duration = ( $until > 0 ? toDuration(round($until - $now)) : "N/A" );
 		$days = round($until - $now) / (60 * 60 * 24);

@@ -3,7 +3,7 @@
 // Map<IP, Hostname>
 $hosts = array(
   '192.168.4.1' => 'Router',        // 38:10:d5:b8:7b:b8 (eth)  Fritz!Box 7490
-  '192.168.4.2' => 'PC',            // 88:88:88:88:87:88 (eth)  Titan-5960X
+  '192.168.4.2' => 'PC [Titan]',    // 88:88:88:88:87:88 (eth)  Titan-5960X
   '192.168.4.3' => 'Server',        // e0:cb:4e:06:20:7e (eth)  Prime-1700
   '192.168.4.4' => 'Laptop',        // 00:15:af:d8:ea:2f (wifi) e1000h
   '192.168.4.5' => 'GameCube',      // 00:09:bf:01:c5:03 (eth)  GameCube
@@ -15,7 +15,8 @@ $hosts = array(
   '192.168.4.14' => 'PC [Pinguin]', // d0:50:99:92:7c:cb (eth)  Pinguin-G1840
 //'192.168.4.17' => 'Server VPN',
   '192.168.4.18' => 'Laptop (vpn)',
-  '192.168.4.19' => 'PC [Killer] (vpn)',
+  '192.168.4.19' => 'PC [Killer]',
+  '192.168.4.20' => 'PC [Leitwolf]',
 );
 
 // Map<Phy, Hostname>
@@ -46,9 +47,11 @@ $macs = array(
 // IPs that are shown when they are offline
 $showAlways = array(
   '192.168.4.1',
-//  '192.168.4.2',
+  '192.168.4.2',
   '192.168.4.3',
-//  '192.168.4.4',
+//'192.168.4.4',
+  '192.168.4.19',
+//'192.168.4.20',
 );
 
 // hide IPs from Internet
@@ -65,22 +68,14 @@ $online = trim(@shell_exec("/rcl/www/status/bash/hosts_online.sh"));
 
 $current_ip = "?";
 
-function breakDate($str){
-        return str_replace("-", "&#8209;", str_replace(" ", "&nbsp;", trim($str)));
-}
-
-function breakTime($str){
-        return str_replace("-", "&#8209;", str_replace(" CE", "&nbsp;CE", trim($str)));
-}
-
-function breakDuration($str){
-        return str_replace("d&nbsp;", "d ", str_replace(" ", "&nbsp;", $str));
-}
-
 function hostCheck(){
         global $online;
         global $showAlways, $showNever;
         global $hosts, $macs;
+        global $bu_files, $upg_files;
+
+        load_backups();
+        load_upgrades();
 
         // mark all as offline
         $stati = array();
@@ -101,7 +96,7 @@ function hostCheck(){
                 if(array_key_exists($mac, $macs)){
                     $hosts[$ip] = $macs[$mac];
                 }
-               // unnamed hosts
+                // unnamed hosts
                 if(! array_key_exists($ip, $hosts)){
                         if((int)(explode(".", $ip)[3]) < 16) {
                                 $hosts[$ip] = "# Unnamed #";
@@ -116,12 +111,12 @@ function hostCheck(){
         foreach($stati as $ip => $on) {
             $name = $hosts[$ip];
             if(preg_match("|^Laptop|i", $name) && $on) { $laptop = true; continue; }
-            if(preg_match("|^PC$|i", $name) && $on) { $pc = true; continue; }
-            if(preg_match("|^PC \[[^P].*\]|i", $name) && $on) { $pc = true; continue; }
+            //if(preg_match("|^PC$|i", $name) && $on) { $pc = true; continue; }
+            //if(preg_match("|^PC \[[^P].*\]|i", $name) && $on) { $pc = true; continue; }
             //if(preg_match("|^PC \[K[^\]].*\]|i", $name) && $on) { $pc = true; continue; }
         }
         if(! $laptop) { $stati['192.168.4.4'] = false; }
-        if(! $pc) { $stati['192.168.4.2'] = false; }
+        //if(! $pc) { $stati['192.168.4.2'] = false; }
 
         // hide hosts
         foreach($showNever as $ip) {
@@ -138,13 +133,39 @@ function hostCheck(){
 
         // table echo
         foreach($ips as $ip) { if($ip !== null) {
+                $host = $hosts[$ip];
+                $name = preg_replace('@( \((vpn|eth|wifi)\))+$@', '', $host);
+                $backup = $bu_files[$name] ?? [];
+                $upgrade = $upg_files[$name] ?? [];
+
                 echo "<tr>";
-                echo "<td>". $hosts[$ip] ."</td>";
+                echo "<td>". $host ."</td>";
                 echo "<td>". $ip ."</td>";
                 if($stati[$ip]) { echo "<td class='green'>Online</td>"; }
                 else  { echo "<td class='red'>Offline</td>"; }
+
+                if ($backup) {
+                    $bud = ($backup['date'] ?? '');
+                    $buc = ($backup['class'] ?? '');
+                    $bua = ($backup['age'] ?? '');
+                    echo "<td>$bud</td> <td class='$buc'>$bua</td>";
+                } else { echo "<td/><td/>"; }
+
+                if ($upgrade) {
+                    $upgd = ($upgrade['date'] ?? '');
+                    $upgc = ($upgrade['class'] ?? '');
+                    $upga = ($upgrade['age'] ?? '');
+                    echo "<td>$upgd</td> <td class='$upgc'>$upga</td>";
+                } else { echo "<td/><td/>"; }
+
                 echo "</tr>";
         }}
+        $rem = $bu_files['Off-site Mirror'] ?? [];
+        $remd = ($rem['date'] ?? '');
+        $remc = ($rem['class'] ?? '');
+        $rema = ($rem['age'] ?? '');
+        echo "<tr> <td>Off-site Mirror</td> <td/> <td/> <td>$remd</td> <td class='$remc'>$rema</td> </tr>";
+
 
     if (count($ips) < 2) {echo "<!-- $online -->";}
 }

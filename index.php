@@ -46,22 +46,6 @@
                     </table>
                 </div>
 
-                <div class="round sub">
-                    <h2 class="header">Last Backups</h2>
-                    <table>
-                        <tr> <th>Name</th> <th>Age</th> <th>Date</th> </tr>
-                        <?php last_backups(); ?>
-                    </table>
-                </div>
-
-                <div class="round sub">
-                    <h2 class="header">Local Network Hosts</h2>
-                    <table>
-                        <tr> <th>Name</th> <th>IP</th> <th>Status</th> </tr>
-                        <?php hostCheck(); ?>
-                    </table>
-                </div>
-
             </div>
 
             <div class="right">
@@ -84,6 +68,15 @@
 
             </div>
 
+        </div>
+
+        <!-- Hosts -->
+        <div class="round sub">
+            <h2 class="header">Network Hosts</h2>
+            <table>
+                <tr> <th>Name</th> <th>IP</th> <th>Status</th> <th>Last Backup</th> <th>Age</th> <th>Last Upgrade</th> <th>Age</th> </tr>
+                <?php hostCheck(); ?>
+            </table>
         </div>
 
         <!-- Current Problems -->
