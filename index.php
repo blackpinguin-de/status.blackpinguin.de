@@ -35,7 +35,7 @@
                         <tr> <td style="visibility: hidden;">&nbsp;</td> </tr>
                         <tr> <td>Distribution:</td> <td><?= $distro ?></td> </tr>
                         <tr> <td>Runlevel:</td> <td><?= $runlevel ?></td> </tr>
-                        <tr> <td>Installation:</td> <td>2017-06-27 20:20:33 CEST</td> </tr>
+                        <tr> <td>Installation:</td> <td>2017-06-27 20:20 CEST</td> </tr>
                         <tr> <td>Last Upgrade:</td> <td><?= $apt ?></td> </tr>
                         <tr> <td>Last Backup:</td> <td><?= $last_backup ?></td> </tr>
                         <tr> <td style="visibility: hidden;">&nbsp;</td> </tr>
