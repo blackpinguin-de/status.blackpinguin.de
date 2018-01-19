@@ -11,16 +11,19 @@ if ($bu_files) { return; }
 $dir = '/rcl/logs/backup';
 
 $files = [
-  'last.txt' => 'Server',
-  'e1000h.txt' => 'Laptop',
-  'titan.txt' => 'PC [Titan]',
-  'killer.txt' => 'PC [Killer]',
+  'last.txt'         => 'Server',
+  'e1000h.txt'       => 'Laptop',
+  'titan.txt'        => 'PC [Titan]',
+  'killer.txt'       => 'PC [Killer]',
+//'pinguin.txt'      => 'PC [Pinguin]',
+//'leitwolf.txt'     => 'PC [Leitwolf]',
+//'icecube.txt'      => 'PC [IceCube]',
   'last_offsite.txt' => 'Off-site Mirror',
 ];
 
 $bu_offsite = [
   'last_offsite.txt' => 1,
-  'killer.txt' => 1,
+  'killer.txt'       => 1,
 ];
 
 $bu_times = [

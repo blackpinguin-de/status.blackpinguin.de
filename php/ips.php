@@ -14,9 +14,10 @@ $hosts = array(
   '192.168.4.13' => 'TV [K]',       // f4:7b:5e:46:17:ae (wifi) Samsung UE32EH5300
   '192.168.4.14' => 'PC [Pinguin]', // d0:50:99:92:7c:cb (eth)  Pinguin-G1840
 //'192.168.4.17' => 'Server VPN',
-  '192.168.4.18' => 'Laptop (vpn)',
-  '192.168.4.19' => 'PC [Killer]',
-  '192.168.4.20' => 'PC [Leitwolf]',
+  '192.168.4.18' => 'Laptop (vpn)',  // (vpn) e1000h
+  '192.168.4.19' => 'PC [Killer]',   // (vpn) Killer-6400XT
+  '192.168.4.20' => 'PC [Leitwolf]', // (vpn) Leitwolf (Norman)
+  '192.168.4.21' => 'PC [IceCube]',  // (vpn) IceCube (Horst)
 );
 
 // Map<Phy, Hostname>
@@ -46,21 +47,23 @@ $macs = array(
 
 // IPs that are shown when they are offline
 $showAlways = array(
-  '192.168.4.1',
-  '192.168.4.2',
-  '192.168.4.3',
-//'192.168.4.4',
-  '192.168.4.19',
-//'192.168.4.20',
+  '192.168.4.1',  // Router
+  '192.168.4.2',  // Titan-5960X
+  '192.168.4.3',  // Prime7
+//'192.168.4.4',  // e1000h
+//'192.168.4.14', // Pinguin-G1840 (Kristine)
+  '192.168.4.19', // (vpn) Killer-6400XT
+  '192.168.4.20', // (vpn) Leitwolf (Norman)
+//'192.168.4.21', // (vpn) IceCube (Horst)
 );
 
 // hide IPs from Internet
 $showNever = array(
-  '192.168.4.0',
-  '192.168.4.15',
-  '192.168.4.16',
-  '192.168.4.17',
-  '192.168.4.31',
+  '192.168.4.0',  // loopback
+  '192.168.4.15', // broadcast
+  '192.168.4.16', // loopback
+  '192.168.4.17', // (vpn) Prime7
+  '192.168.4.31', // broadcast
 );
 
 // Ping Hosts to see if they're online
