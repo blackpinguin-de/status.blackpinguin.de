@@ -49,7 +49,7 @@ $upg_times = [
   'red4'    => strtotime('-1 month -5 weeks -2 days', $now),
 ];
 
-$apt = trim(@shell_exec('sec=$(stat -c %Y /var/cache/apt/) ; date -d "@$sec" +"%Y-%m-%d %H:%M:%S %Z"'));
+$apt = trim(@shell_exec('a=$(zcat /var/log/apt/history.log.1.gz ; cat /var/log/apt/history.log) ; d=$(echo "$a" | grep "End-Date:" | tail -n 1 | grep -o ":.*" | grep -Eo "[0-9]{4}(-[0-9]{2}){2}  [0-9]{2}(:[0-9]{2}){2}")  ; date -d "$d" +"%Y-%m-%d %H:%M:%S %Z"'));
 
 foreach ($files as $file => $name) {
 	$date = ( $file === 'local' ? $apt : trim(@file_get_contents("$dir/$file")) );
