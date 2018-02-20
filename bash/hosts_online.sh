@@ -10,7 +10,7 @@ if ( [ "$1" == "force" ] || [ $(find $FILE -cmin +10) ] ) ; then
   fi
 
   {
-  sudo -u root nmap -n -PO 192.168.4.1-15 192.168.4.18-20 -T5 --host-timeout 600ms \
+  sudo -u root nmap -n -PO 192.168.4.1-15 192.168.4.18-21 -T5 --host-timeout 600ms \
     --min-hostgroup 64 --min-parallelism 64 --max-retries 2 --max-rtt-timeout 600ms ;
   } | grep -oP 'scan report for .*\(?\K192\.168\.\d{1,3}\.\d{1,3}(?=\)?)' > $FILE
 

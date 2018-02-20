@@ -54,7 +54,7 @@ $showAlways = array(
 //'192.168.4.14', // Pinguin-G1840 (Kristine)
   '192.168.4.19', // (vpn) Killer-6400XT
   '192.168.4.20', // (vpn) Leitwolf (Norman)
-//'192.168.4.21', // (vpn) IceCube (Horst)
+  '192.168.4.21', // (vpn) IceCube (Horst)
 );
 
 // hide IPs from Internet
@@ -253,7 +253,7 @@ function topIPs(){
 
         $qr = "
                 SELECT
-                  CONCAT(x.ip >> 24 & 255, '.', x.ip >> 16 & 255, '.', ((x.ip >> 8 & 255)>>4)<<4, '.0 /20') ip
+                  CONCAT(x.ip >> 24 & 255, '.', x.ip >> 16 & 255, '.', ((x.ip >> 8 & 255)>>6)<<6, '.0 /18') ip
                   , COUNT(*) anzahl
                   , COUNT(distinct x.ip) ips
                   , SUM(TIME_TO_SEC(TIMEDIFF(x.bis,x.von))) ord
@@ -261,19 +261,23 @@ function topIPs(){
                   , with_timezone(min(x.von)) first
                   , with_timezone(max(x.bis)) last
                 FROM iplog_raw x
-                GROUP BY (x.ip >> 12)
+                GROUP BY (x.ip >> 14)
                 ORDER BY ord DESC
         ";
         $res = $mysqli->query($qr);
-        if($res === FALSE){ echo("<tr><td colspan='6'>MySQL query error</td></tr>"); return; }
+        if ($res === FALSE) { echo("<tr><td colspan='6'>MySQL query error</td></tr>"); return; }
 
-        while($row = $res->fetch_assoc()){
+        while ($row = $res->fetch_assoc()) {
                 echo  "<tr";
                 $ip = $row['ip'];
-                if(strncmp($current_ip, $ip, 6) == 0){
-                        $a = (int)explode('.',$ip)[2];
-                        $b = (int)explode('.',$current_ip)[2];
-                        if($a >> 4 === $b >> 4){echo " class='green'";}
+                if (strncmp($current_ip, $ip, 6) == 0) {
+                        $a = explode('.', $ip);
+                        $b = explode('.', $current_ip);
+                        unset($a[3]);
+                        unset($b[3]);
+                        $a[2] = ((int)$a[2]) >> 6;
+                        $b[2] = ((int)$b[2]) >> 6;
+                        if ($a == $b) { echo " class='green'"; }
                 }
                 echo "><td>" . $row['ip'] . "</td>";
                 echo "<td>" . breakDuration(toDuration($row['duration'])) . "</td>";
