@@ -61,6 +61,7 @@ a.footer:hover { text-decoration: underline; }
 }
 .disk-img > div span { margin-left: 10px;  font-size: 1.25em; text-shadow: 0 0 2px black; }
 .disk-img > div span > span { font-size: 0.55em; color: #999; }
+.disk-img > div.lvm { background-color: #274727; }
 .disk-img > div.unmounted { background-color: #a41; }
 .disk-img > div.unmounted.known { background-color: #862; }
 .disk-img > div.unmounted.known > div { background-color: #a41; }

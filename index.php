@@ -41,7 +41,7 @@
                         <tr> <td style="visibility: hidden;">&nbsp;</td> </tr>
                         <tr> <td>Hardware:</td> <td>Ryzen 7 1700, ASUS Prime B350M-A</td> </tr>
                         <tr> <td>Acquisition:</td> <td>2017-06-04</td> </tr>
-                        <tr> <td>Last Maintenance:</td> <td>2017-07-08</td> </tr>
+                        <tr> <td>Last Maintenance:</td> <td>2020-02-27</td> </tr>
                         <tr> <td>Last Reboot:</td> <td><?= $boottime ?></td> </tr>
                     </table>
                 </div>

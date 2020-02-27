@@ -17,6 +17,7 @@ function diskBars(){
     $diskspace = trim(@shell_exec("/rcl/www/status/bash/disks_hdd.sh"));
     $memory = trim(@shell_exec("/rcl/www/status/bash/disks_memory.sh"));
 //  $swap = trim(@shell_exec("/rcl/www/status/bash/disks_swap.sh"));
+    $lvm_free = trim(@shell_exec("sudo -u root /sbin/vgdisplay --units B | grep -E '(VG Size|Alloc PE)' | grep -Eo '[0-9]+ B' | grep -Eo '[0-9]+'"));
 
     $load_disks = function ($file) {
       $lines = explode("\n", trim($file));
@@ -34,17 +35,23 @@ function diskBars(){
 
     if (in_array($_SERVER['HTTP_HOST'], ['status.server', 'status.blackpinguin.de'])) {
         // allways show
-        $data["/ext/media"]     = [ 433491744,  0.0, 0.0, false ];
+        $data["/ext/media"]     = [  433491744, 0.0, 0.0, false ];
         $data["/ext/images"]    = [ 1056894132, 0.0, 0.0, false ];
-        $data["/ext/encrypted"] = [ 186623424,  0.0, 0.0, false ];
-        $data["/ext/backup"]    = [ 252687936,  0.0, 0.0, false ];
+        $data["/ext/encrypted"] = [  186623424, 0.0, 0.0, false ];
+        $data["/ext/backup"]    = [  252687936, 0.0, 0.0, false ];
+
+        $data["/hdd/backup"]        = [  308587072, 0.0, 0.0, false ];
+        $data["/hdd/encrypted"]     = [  102687416, 0.0, 0.0, false ];
+        $data["/hdd/images"]        = [  515010816, 0.0, 0.0, false ];
+        $data["/hdd/media/audio"]   = [  102949816, 0.0, 0.0, false ];
+        $data["/hdd/media/picture"] = [   51343840, 0.0, 0.0, false ];
+        $data["/hdd/media/video"]   = [ 2112729008, 0.0, 0.0, false ];
     }
 
     $lines = explode("\n",$diskspace);
     foreach($load_disks($diskspace) as $name => $d) {
       $data[$name] = $d;
     }
-    $max = max(array_map(function($x){return $x[0];}, $data));
 
     ksort($data);
 
@@ -61,6 +68,7 @@ function diskBars(){
       }
     }
 
+    // Swap / Memory
     $data["swap"] = array(0, 0, 0, true);
     $data["memory"] = array(0, 0, null, true);
 
@@ -79,6 +87,16 @@ function diskBars(){
     $data["swap"][2] = $data["swap"][1] / $data["swap"][0] * 100.0;
     $data["memory"][2] = $data["memory"][1] / $data["memory"][0] * 100.0;
 
+    // LVM
+    $data["lvm"] = [0, 0, 100.0, false];
+    foreach (explode("\n", $lvm_free) as $i => $line) {
+        $data["lvm"][0] += ((int) $line)  / 1024.0 * ($i % 2 === 0 ? 1 : -1);
+        $data["lvm"][1] += ($i %2 === 0 ? ((int) $line)  / 1024.0 : 0);
+    }
+    $data["lvm"][2] = $data["lvm"][0] / $data["lvm"][1] * 100.0;
+
+    // Output
+    $max = max(array_map(function($x){return $x[0];}, $data));
     echo "<div class='disk-img'>";
     foreach($data as $name => $x){
         $size  = $x[0] / $max * 100.0;
@@ -100,7 +118,7 @@ function diskBars(){
             echo " GiB</span></span></div></div>";
         }
         // unmounted
-        else {
+        elseif ($name !== "lvm") {
             $title = "The device '$name' is currently not mounted. It has a total size of $total GiB";
             // with data from last mount
             if ($x[2] !== 0) {
@@ -116,6 +134,12 @@ function diskBars(){
                 echo "<span>$name<span>$total";
                 echo " GiB - not mounted</span></span></div>";
             }
+        }
+        elseif ($name === "lvm") {
+            $title = "There is currently $total GiB (" . round($x[2], 2) . "%) unallocated space for LVM";
+            echo "<div style='width:$size%' class='lvm' title=\"$title.\">";
+            echo "<span>$name<span>$total";
+            echo " GiB - not allocated</span></span></div>";
         }
     }
     echo "</div>";

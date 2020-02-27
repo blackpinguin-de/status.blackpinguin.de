@@ -3,7 +3,7 @@
 // Certificates
 $crtFiles = array(
   '*.blackpinguin.de'      => '/rcl/certs/domain.crt',
-  'xmpp.blackpinguin.de'   => '/rcl/certs/xmpp.crt',
+//  'xmpp.blackpinguin.de'   => '/rcl/certs/xmpp.crt',
 
   "<a href='https://blackpinguin.de/'>blackpinguin.de</a>"
       => '/rcl/certs/letsencrypt/crt/blackpinguin.de.crt',
@@ -33,13 +33,15 @@ $crtFiles = array(
       => '/rcl/certs/letsencrypt/crt/blackpinguin.de/rdb.crt',
 //  "<a href='https://mcheck.blackpinguin.de/'>mcheck.blackpinguin.de</a>"
 //      => '/rcl/certs/letsencrypt/crt/blackpinguin.de/mcheck.crt',
-//  "<a href=''>xmpp.blackpinguin.de</a>"
-//      => '/rcl/certs/letsencrypt/crt/blackpinguin.de/xmpp.crt',
+  "<a href='https://pine.blackpinguin.de/'>pine.blackpinguin.de</a>"
+      => '/rcl/certs/letsencrypt/crt/blackpinguin.de/pine.crt',
+  "xmpp.blackpinguin.de"   => '/rcl/certs/letsencrypt/crt/blackpinguin.de/xmpp.crt',
   "mail.blackpinguin.de"   => '/rcl/certs/letsencrypt/crt/blackpinguin.de/mail.crt',
 
   'vpn.blackpinguin.de'  => '/rcl/certs/openvpn/vpn.bp.de/keys/vpn.blackpinguin.de.crt',
   'VPN: Laptop'          => '/rcl/certs/openvpn/vpn.bp.de/keys/e1000h.vpn.blackpinguin.de.crt',
-  'VPN: PC'              => '/rcl/certs/openvpn/vpn.bp.de/keys/leitwolf.vpn.blackpinguin.de.crt',
+  'VPN: PC 1'            => '/rcl/certs/openvpn/vpn.bp.de/keys/leitwolf.vpn.blackpinguin.de.crt',
+  'VPN: PC 2'            => '/rcl/certs/openvpn/vpn.bp.de/keys/icecube.vpn.blackpinguin.de.crt',
   'VPN: Off-site Backup' => '/rcl/certs/openvpn/vpn.bp.de/keys/killer.vpn.blackpinguin.de.crt',
 
   // S/MIME

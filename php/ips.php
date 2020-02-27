@@ -51,7 +51,7 @@ $showAlways = array(
   '192.168.4.2',  // Titan-5960X
   '192.168.4.3',  // Prime7
 //'192.168.4.4',  // e1000h
-//'192.168.4.14', // Pinguin-G1840 (Kristine)
+  '192.168.4.14', // Pinguin-G1840 (Kristine)
   '192.168.4.19', // (vpn) Killer-6400XT
   '192.168.4.20', // (vpn) Leitwolf (Norman)
   '192.168.4.21', // (vpn) IceCube (Horst)
@@ -289,7 +289,7 @@ function topIPs(){
 }
 
 function ipDowntime(){
-	global $mysqli;
+    global $mysqli;
     global $current_ip;
 
     if($mysqli->connect_error){ echo "MySQL connection error"; return; }
@@ -299,7 +299,7 @@ function ipDowntime(){
 		    first
 		  -- , last
 		  -- , total as total
-		  -- , uptime as uptime
+		  , uptime as uptime
 		  , total - uptime as downtime
 		  , ROUND(uptime / total * 100, 2) as online
 		FROM
@@ -318,7 +318,13 @@ function ipDowntime(){
     if($res === FALSE){ echo("<tr><td colspan='6'>MySQL query error</td></tr>"); return; }
 
     while($row = $res->fetch_assoc()){
-        echo "Since ".$row['first']." this server was offline for at least <span class='red'>".toDuration($row['downtime'])."</span>, implying it was online <span class='green'>".$row['online']."%</span> of the time.";
+        echo "Since " . $row['first'] . " this server was offline for at least "
+           . "<span class='red'>" . toDuration($row['downtime']) . "</span>"
+           . ", implying it was online "
+           . "<span class='green'>" . $row['online'] . "%</span>"
+           . " of the time "
+           . "(ca. <span class='green'>" . toDuration($row['uptime']) . "</span>)."
+        ;
         return;
     }
 }
