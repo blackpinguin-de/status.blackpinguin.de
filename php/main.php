@@ -15,7 +15,6 @@ $runtime = trim(@shell_exec("bash/uptime.py"));
 $distro = trim(@shell_exec("cat /etc/os-release | grep 'PRETTY_NAME=\"' | sed -re 's|[^\"]+=\"([^\"]+)\"|\\1|g'"));
 $runlevel = trim(@shell_exec("who -r | grep -Po 'run-level \\d ' | grep -Po '\\d'"));
 $boottime = toDate(trim(@shell_exec("x=$(LANG='en_US.utf8'; uptime -s) ; date -d \"\$x\" +'%F %T %Z'")));
-#$boottime = toDate(trim(@shell_exec("x=$(LANG='en_US.utf8'; who -b | grep 'system boot' | grep -Eo '[0-9][0-9\:\ \-]+$') ; date -d \"\$x\" +'%F %T %Z'")));
 
 $now   = time();
 

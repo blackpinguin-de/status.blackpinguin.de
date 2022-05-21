@@ -7,17 +7,17 @@ $hosts = array(
   '192.168.4.3' => 'Server',        // e0:cb:4e:06:20:7e (eth)  Prime-1700
   '192.168.4.4' => 'Laptop',        // 00:15:af:d8:ea:2f (wifi) e1000h
   '192.168.4.5' => 'GameCube',      // 00:09:bf:01:c5:03 (eth)  GameCube
-  '192.168.4.6' => 'Switch',        // 04:03:d6:a5:e6:b4 (wifi) Switch
-  '192.168.4.7' => 'PS4 Pro',       // f8:46:1c:d9:f6:89 (eth)  PS4 Pro
-//'192.168.4.8' => 'XBoxOne',       // ---
+  '192.168.4.6' => 'Switch',        // 70:f0:88:4d:cf:09 (wifi) Switch (OLED)
+  '192.168.4.7' => 'PS5',           // 5c:96:66:dd:93:07 (eth)  PS5
   '192.168.4.12' => 'TV [R]',       // 30:a9:de:50:3e:0e (wifi) OK ODL 326450F-TIB
   '192.168.4.13' => 'TV [K]',       // f4:7b:5e:46:17:ae (wifi) Samsung UE32EH5300
   '192.168.4.14' => 'PC [Pinguin]', // d0:50:99:92:7c:cb (eth)  Pinguin-G1840
 //'192.168.4.17' => 'Server VPN',
-  '192.168.4.18' => 'Laptop (vpn)',  // (vpn) e1000h
+  '192.168.4.18' => 'Laptop (vpn) [old]',  // (vpn) e1000h
   '192.168.4.19' => 'PC [Killer]',   // (vpn) Killer-6400XT
   '192.168.4.20' => 'PC [Leitwolf]', // (vpn) Leitwolf (Norman)
   '192.168.4.21' => 'PC [IceCube]',  // (vpn) IceCube (Horst)
+  '192.168.4.22' => 'Laptop (vpn)',  // (vpn) QSec15
 );
 
 // Map<Phy, Hostname>
@@ -32,15 +32,19 @@ $macs = array(
   'd0:50:99:92:7c:cb' => 'PC [Pinguin]',   // (eth)  Pinguin-G1840
   '60:45:cb:60:4d:43' => 'Server',         // (eth)  Prime-1700
 //'54:04:a6:f2:03:45' => 'PC [K]',         // (eth)  LADIGES-250X2 (K, Trojan)
-  'e0:cb:4e:06:20:7e' => 'Server [old]',   // (eth)  EB1012
-  '00:15:af:d8:ea:2f' => 'Laptop (wifi)',  // (wifi) EEE1000H
-  '00:24:8C:25:B2:79' => 'Laptop (eth)',   // (eth)  EEE1000H
+//'e0:cb:4e:06:20:7e' => 'Server [old]',   // (eth)  EB1012 (kaputt)
+  '5c:3a:45:9b:66:95' => 'Laptop (wifi)',  // (wifi) QSec15
+  '84:2a:fd:6f:ba:f9' => 'Laptop (eth)',   // (eth)  QSec15
+  '00:15:af:d8:ea:2f' => 'Laptop (wifi) [old]',  // (wifi) EEE1000H
+  '00:24:8C:25:B2:79' => 'Laptop (eth) [old]',   // (eth)  EEE1000H
   '00:09:bf:01:c5:03' => 'GameCube',       // (eth)  GameCube
-  '04:03:d6:a5:e6:b4' => 'Switch',         // (wifi) Switch
-  '0c:fe:45:03:59:ac' => 'PS4 (eth)',      // (eth)  PS4 (Norman)
+  '70:f0:88:4d:cf:09' => 'Switch OLED',    // (wifi) Switch OLED
+  '04:03:d6:a5:e6:b4' => 'Switch [old]',   // (wifi) Switch (Liam)
+  '0c:fe:45:03:59:ac' => 'PS4',            // (eth)  PS4 (Norman)
   '60:5b:b4:03:d1:97' => 'PS4 (wifi)',     // (wifi) PS4 (Norman)
-  'f8:46:1c:d9:f6:89' => 'PS4 Pro (eth)',  // (eth)  PS4 Pro
+  'f8:46:1c:d9:f6:89' => 'PS4 Pro',        // (eth)  PS4 Pro
   'e8:9e:b4:a4:8d:17' => 'PS4 Pro (wifi)', // (wifi) PS4 Pro
+  '5c:96:66:dd:93:07' => 'PS5',            // (eth)  PS5
   '30:a9:de:50:3e:0e' => 'TV [R]',         // (wifi) OK ODL 326450F-TIB
   'f4:7b:5e:46:17:ae' => 'TV [K]',         // (wifi) Samsung UE32EH5300
 );
@@ -50,10 +54,10 @@ $showAlways = array(
   '192.168.4.1',  // Router
   '192.168.4.2',  // Titan-5960X
   '192.168.4.3',  // Prime7
-//'192.168.4.4',  // e1000h
+//'192.168.4.4',  // Laptop
   '192.168.4.14', // Pinguin-G1840 (Kristine)
   '192.168.4.19', // (vpn) Killer-6400XT
-  '192.168.4.20', // (vpn) Leitwolf (Norman)
+//'192.168.4.20', // (vpn) Leitwolf (Norman)
   '192.168.4.21', // (vpn) IceCube (Horst)
 );
 
@@ -195,7 +199,7 @@ function lastIPs(){
     $body = "";
     $from = null;
     $to = null;
-    
+
     while($row = $res->fetch_assoc()){
         // long offline period between IPs
         $from = strtotime($row['bis']);
@@ -209,7 +213,7 @@ function lastIPs(){
 			$one_offline = true;
 		}
         $to = strtotime($row['von']);
-		
+
 		$h = 24 * (int) preg_replace("|^(?:([0-9]+)d )?[0-9]+h [0-9]+m$|","$1",$row['duration']);
 		$h += (int) preg_replace("|^(?:[0-9]+d )?([0-9]+)h [0-9]+m$|","$1",$row['duration']);
 		$offline = $row['offline'];
@@ -253,7 +257,7 @@ function topIPs(){
 
         $qr = "
                 SELECT
-                  CONCAT(x.ip >> 24 & 255, '.', x.ip >> 16 & 255, '.', ((x.ip >> 8 & 255)>>6)<<6, '.0 /18') ip
+                  CONCAT(x.ip >> 24 & 255, '.', x.ip >> 16 & 255, '.0.0 /16') ip
                   , COUNT(*) anzahl
                   , COUNT(distinct x.ip) ips
                   , SUM(TIME_TO_SEC(TIMEDIFF(x.bis,x.von))) ord
@@ -261,7 +265,7 @@ function topIPs(){
                   , with_timezone(min(x.von)) first
                   , with_timezone(max(x.bis)) last
                 FROM iplog_raw x
-                GROUP BY (x.ip >> 14)
+                GROUP BY (x.ip >> 16)
                 ORDER BY ord DESC
         ";
         $res = $mysqli->query($qr);
@@ -275,8 +279,8 @@ function topIPs(){
                         $b = explode('.', $current_ip);
                         unset($a[3]);
                         unset($b[3]);
-                        $a[2] = ((int)$a[2]) >> 6;
-                        $b[2] = ((int)$b[2]) >> 6;
+                        unset($a[2]);
+                        unset($b[2]);
                         if ($a == $b) { echo " class='green'"; }
                 }
                 echo "><td>" . $row['ip'] . "</td>";
