@@ -6,9 +6,11 @@ $pub = array(
   array('HTTPS', 443, 'tcp'),
   array('SSH', 22, 'tcp'),
   array('SMTP', 25, 'tcp'),
+  array('DNS', 53, 'udp'),
   array('SMTPS', 465, 'tcp'),
   array('SMTP-MSA', 587, 'tcp'),
   array('POP3S', 995, 'tcp'),
+  array('<a href="https://smoo.it/" target="_blank">SMOO</a>', 1027, 'tcp'),
   array('XMPP C2S', 5222, 'tcp'),
   array('XMPP S2S', 5269, 'tcp'),
   array('Tor Dir', 60001, 'tcp'),
@@ -20,7 +22,6 @@ $pub = array(
 // Private Services
 $priv = array(
 //array('FTP', 21, 'tcp'),
-  array('DNS', 53, 'udp'),
   array('MySQL', 3306, 'tcp'),
   array('Samba', 445, 'tcp'),
   array('Cups', 631, 'tcp'),
