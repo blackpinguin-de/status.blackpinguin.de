@@ -2,22 +2,30 @@
 
 // Map<IP, Hostname>
 $hosts = array(
-  '192.168.4.1' => 'Router',        // 38:10:d5:b8:7b:b8 (eth)  Fritz!Box 7490
-  '192.168.4.2' => 'PC [Titan]',    // 88:88:88:88:87:88 (eth)  Titan-5960X
-  '192.168.4.3' => 'Server',        // e0:cb:4e:06:20:7e (eth)  Prime-1700
-  '192.168.4.4' => 'Laptop',        // 00:15:af:d8:ea:2f (wifi) e1000h
-  '192.168.4.5' => 'GameCube',      // 00:09:bf:01:c5:03 (eth)  GameCube
-  '192.168.4.6' => 'Switch',        // 70:f0:88:4d:cf:09 (wifi) Switch (OLED)
-  '192.168.4.7' => 'PS5',           // 5c:96:66:dd:93:07 (eth)  PS5
-  '192.168.4.12' => 'TV [R]',       // 30:a9:de:50:3e:0e (wifi) OK ODL 326450F-TIB
-  '192.168.4.13' => 'TV [K]',       // f4:7b:5e:46:17:ae (wifi) Samsung UE32EH5300
-  '192.168.4.14' => 'PC [Pinguin]', // d0:50:99:92:7c:cb (eth)  Pinguin-G1840
-//'192.168.4.17' => 'Server VPN',
-  '192.168.4.18' => 'Laptop (vpn) [old]',  // (vpn) e1000h
-  '192.168.4.19' => 'PC [Killer]',   // (vpn) Killer-6400XT
-  '192.168.4.20' => 'PC [Leitwolf]', // (vpn) Leitwolf (Norman)
-  '192.168.4.21' => 'PC [IceCube]',  // (vpn) IceCube (Horst)
-  '192.168.4.22' => 'Laptop (vpn)',  // (vpn) QSec15
+  '192.168.4.1' => 'Router',        // (eth)  Fritz!Box 7490
+  '192.168.4.2' => 'PC [Titan]',    // (eth)  Titan-5960X
+  '192.168.4.3' => 'Server',        // (eth)  Prime-1700
+  '192.168.4.4' => 'Laptop',        // (wifi) e1000h
+
+  '192.168.4.5' => 'Switch OLED',   // (wifi) Switch (OLED)
+  '192.168.4.6' => 'Switch [mod]',  // (wifi) Switch (Miri)
+  '192.168.4.7' => 'Switch (eth)',  // (eth)  Switch (Docking-Station)
+  '192.168.4.8' => 'GameCube',      // (eth)  GameCube
+
+  '192.168.4.9'  => 'PS4 Pro',      // (eth) PS4 Pro
+  '192.168.4.10' => 'PS5',          // (eth) PS5
+
+  '192.168.4.22' => 'TV [R]',       // 30:a9:de:50:3e:0e (wifi) OK ODL 326450F-TIB
+  '192.168.4.23' => 'TV [K]',       // f4:7b:5e:46:17:ae (wifi) Samsung UE32EH5300
+  '192.168.4.24' => 'PC [Pinguin]', // d0:50:99:92:7c:cb (eth)  Pinguin-G1840
+
+  '192.168.4.30' => 'Repeater',      // (eth)  VigorAP 800 (Robin)
+//'192.168.4.33' => 'Server VPN',
+  '192.168.4.34' => 'Laptop (vpn) [old]',  // (vpn) e1000h
+  '192.168.4.35' => 'PC [Killer]',   // (vpn) Killer-6400XT
+  '192.168.4.36' => 'PC [Leitwolf]', // (vpn) Leitwolf (Norman)
+  '192.168.4.37' => 'PC [IceCube]',  // (vpn) IceCube (Horst)
+  '192.168.4.38' => 'Laptop (vpn)',  // (vpn) QSec15
 );
 
 // Map<Phy, Hostname>
@@ -49,6 +57,8 @@ $macs = array(
   '5c:96:66:dd:93:07' => 'PS5',            // (eth)  PS5
   '30:a9:de:50:3e:0e' => 'TV [R]',         // (wifi) OK ODL 326450F-TIB
   'f4:7b:5e:46:17:ae' => 'TV [K]',         // (wifi) Samsung UE32EH5300
+  '00:1d:aa:37:b5:10' => 'Repeater',       // (eth)  VigorAP 800 (Robin)
+  '00:1d:aa:34:74:80' => 'Repeater 2',     // (eth)  VigorAP 800 (Norman)
 );
 
 // IPs that are shown when they are offline
@@ -57,19 +67,19 @@ $showAlways = array(
   '192.168.4.2',  // Titan-5960X
   '192.168.4.3',  // Prime7
 //'192.168.4.4',  // Laptop
-  '192.168.4.14', // Pinguin-G1840 (Kristine)
-  '192.168.4.19', // (vpn) Killer-6400XT
-//'192.168.4.20', // (vpn) Leitwolf (Norman)
-  '192.168.4.21', // (vpn) IceCube (Horst)
+  '192.168.4.24', // Pinguin-G1840 (Kristine)
+  '192.168.4.35', // (vpn) Killer-6400XT
+//'192.168.4.36', // (vpn) Leitwolf (Norman)
+  '192.168.4.37', // (vpn) IceCube (Horst)
 );
 
 // hide IPs from Internet
 $showNever = array(
   '192.168.4.0',  // loopback
-  '192.168.4.15', // broadcast
-  '192.168.4.16', // loopback
-  '192.168.4.17', // (vpn) Prime7
   '192.168.4.31', // broadcast
+  '192.168.4.32', // loopback
+  '192.168.4.33', // (vpn) Prime7
+  '192.168.4.63', // broadcast
 );
 
 // Ping Hosts to see if they're online
