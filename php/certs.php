@@ -37,6 +37,7 @@ $crtFiles = array(
 //      => '/rcl/certs/letsencrypt/crt/blackpinguin.de/pine.crt',
   "xmpp.blackpinguin.de"   => '/rcl/certs/letsencrypt/crt/blackpinguin.de/xmpp.crt',
   "mail.blackpinguin.de"   => '/rcl/certs/letsencrypt/crt/blackpinguin.de/mail.crt',
+  "rcl.smoo.it"            => '/rcl/certs/letsencrypt/crt/smoo.it/rcl.crt',
 
   'vpn.blackpinguin.de'  => '/rcl/certs/openvpn/vpn.bp.de/keys/vpn.blackpinguin.de.crt',
   'VPN: Laptop [old]'    => '/rcl/certs/openvpn/vpn.bp.de/keys/e1000h.vpn.blackpinguin.de.crt',
