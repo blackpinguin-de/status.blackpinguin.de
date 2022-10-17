@@ -304,21 +304,22 @@ function topIPs(){
         }
 }
 
-function ipDowntime(){
+function ipDowntimeStamp($stamp = null){
     global $mysqli;
     global $current_ip;
 
     if($mysqli->connect_error){ echo "MySQL connection error"; return; }
 
+    $where = ($stamp ? "WHERE von >= '" . date('Y-m-d H:i:s', $stamp) . "'" : '');
     $qr = "
-		SELECT
-		    first
-		  -- , last
-		  -- , total as total
-		  , uptime as uptime
-		  , total - uptime as downtime
-		  , ROUND(uptime / total * 100, 2) as online
-		FROM
+        SELECT
+          first
+        -- , last
+        -- , total as total
+         , uptime as uptime
+         , total - uptime as downtime
+         , ROUND(uptime / total * 100, 2) as online
+        FROM
         (
         SELECT
             1 as id
@@ -327,6 +328,7 @@ function ipDowntime(){
           , UNIX_TIMESTAMP(MAX(bis)) - UNIX_TIMESTAMP(MIN(von)) as total
           , SUM(LEAST(runtime, UNIX_TIMESTAMP(bis) - UNIX_TIMESTAMP(von) )) as uptime
         FROM iplog_raw
+        $where
         GROUP BY 1
         ) as x
     ";
@@ -334,13 +336,38 @@ function ipDowntime(){
     if($res === FALSE){ echo("<tr><td colspan='6'>MySQL query error</td></tr>"); return; }
 
     while($row = $res->fetch_assoc()){
-        echo "Since " . $row['first'] . " this server was offline for at least "
-           . "<span class='red'>" . toDuration($row['downtime']) . "</span>"
-           . ", implying it was online "
-           . "<span class='green'>" . $row['online'] . "%</span>"
-           . " of the time "
-           . "(ca. <span class='green'>" . toDuration($row['uptime']) . "</span>)."
-        ;
-        return;
+      return $row;
     }
+    return null;
+}
+
+function ipDowntime(){
+    $row = ipDowntimeStamp();
+    if (! $row) { return; }
+    echo "Since " . $row['first'] . " this server was offline for at least "
+       . "<span class='red'>" . toDuration($row['downtime']) . "</span>"
+       . ", implying it was online "
+       . "<span class='green'>" . $row['online'] . "%</span>"
+       . " of the time "
+       . "(ca. <span class='green'>" . toDuration($row['uptime']) . "</span>)."
+    ;
+}
+
+function ipDowntimeLastYear(){
+    $mon = ipDowntimeStamp(strtotime('-1 month'));
+    if (! $mon) { return; }
+
+    $one = ipDowntimeStamp(strtotime('-1 year'));
+    if (! $one) { return; }
+
+    $two = ipDowntimeStamp(strtotime('-2 year'));
+    if (! $two) { return; }
+
+    echo "The last month it had a theoretical uptime of "
+      . "<span class='green'>" . $mon['online'] . "%</span>,"
+      . " over the last year of "
+      . "<span class='green'>" . $one['online'] . "%</span>,"
+      . " and the last two years of "
+      . "<span class='green'>" . $two['online'] . "%</span>."
+    ;
 }

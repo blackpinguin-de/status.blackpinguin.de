@@ -118,7 +118,7 @@
             <?php topIPs(); ?>
             </table>
             <br/>
-            <div><?php ipDowntime(); ?></div>
+            <div><?php ipDowntime(); echo " "; ipDowntimeLastYear(); ?></div>
         </div>
 
     </div>
