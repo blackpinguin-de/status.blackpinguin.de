@@ -12,7 +12,8 @@ $dir = '/rcl/logs/upgrade';
 
 $files = [
   'local'        => 'Server',
-  'e1000h.txt'   => 'Laptop',
+//'e1000h.txt'   => 'Laptop',
+  'qsec15.txt'   => 'Laptop',
   'titan.txt'    => 'PC [Titan]',
   'killer.txt'   => 'PC [Killer]',
   'pinguin.txt'  => 'PC [Pinguin]',
