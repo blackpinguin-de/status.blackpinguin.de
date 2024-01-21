@@ -46,6 +46,14 @@
                     </table>
                 </div>
 
+                <div class="round sub">
+                    <h2 class="header">Private Services</h2>
+                    <table>
+                        <tr> <th>Service</th> <th>Port</th> <th>Status</th> </tr>
+                        <?php privateServices(); ?>
+                    </table>
+                </div>
+
             </div>
 
             <div class="right">
@@ -55,14 +63,6 @@
                     <table>
                         <tr> <th>Service</th> <th>Port</th> <th>Status</th> </tr>
                         <?php publicServices(); ?>
-                    </table>
-                </div>
-
-                <div class="round sub">
-                    <h2 class="header">Private Services</h2>
-                    <table>
-                        <tr> <th>Service</th> <th>Port</th> <th>Status</th> </tr>
-                        <?php privateServices(); ?>
                     </table>
                 </div>
 
