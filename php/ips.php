@@ -68,7 +68,7 @@ $showAlways = array(
   '192.168.4.3',  // Prime7
 //'192.168.4.4',  // Laptop
   '192.168.4.24', // Pinguin-G1840 (Kristine)
-  '192.168.4.35', // (vpn) Killer-6400XT
+//'192.168.4.35', // (vpn) Killer-6400XT
 //'192.168.4.36', // (vpn) Leitwolf (Norman)
   '192.168.4.37', // (vpn) IceCube (Horst)
 );
@@ -117,7 +117,7 @@ function hostCheck(){
                 }
                 // unnamed hosts
                 if(! array_key_exists($ip, $hosts)){
-                        if((int)(explode(".", $ip)[3]) < 16) {
+                        if((int)(explode(".", $ip)[3]) < 32) {
                                 $hosts[$ip] = "# Unnamed #";
                         } else {
                                 $hosts[$ip] = "# Unnamed VPN #";
