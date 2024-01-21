@@ -10,7 +10,7 @@ if ( [ "$1" == "force" ] || [ $(find $FILE -cmin +10) ] ) ; then
   fi
 
   ip=$(/rcl/scripts/ipv4/current_public.sh)
-  tcp="22,25,80,443,465,587,995,1027,5222,5269,60001,60002"
+  tcp="22,25,80,443,465,587,995,1027,1028,1029,1030,5222,5269,60001,60002"
   udp=( 53 8080)
   options="--host-timeout 600ms --min-hostgroup 64 --min-parallelism 64 --max-retries 2 --max-rtt-timeout 600ms"
   sudo nmap -PE $ip -p$tcp -T3 $options | grep -oP '^[0-9]+/tcp +[a-z\|]+' > $FILE

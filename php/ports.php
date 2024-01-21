@@ -10,12 +10,15 @@ $pub = array(
   array('SMTPS', 465, 'tcp'),
   array('SMTP-MSA', 587, 'tcp'),
   array('POP3S', 995, 'tcp'),
-  array('<a href="https://smoo.it/" target="_blank">SMOO</a>', 1027, 'tcp'),
+  array('<a href="https://smoo.it/" target="_blank">SMOO 1</a>', 1027, 'tcp'),
+  array('<a href="https://smoo.it/" target="_blank">SMOO 2</a>', 1028, 'tcp'),
+  array('<a href="https://smoo.it/" target="_blank">SMOO 3</a>', 1029, 'tcp'),
+  array('<a href="https://smoo.it/" target="_blank">SMOO 4</a>', 1030, 'tcp'),
   array('XMPP C2S', 5222, 'tcp'),
   array('XMPP S2S', 5269, 'tcp'),
-  array('Tor Dir', 60001, 'tcp'),
-  array('Tor OR', 60002, 'tcp'),
-#  array('OpenVPN 1', 8080, 'tcp'),
+//array('Tor Dir', 60001, 'tcp'),
+//array('Tor OR', 60002, 'tcp'),
+//array('OpenVPN 1', 8080, 'tcp'),
   array('OpenVPN', 8080, 'udp'),
 );
 
@@ -27,10 +30,11 @@ $priv = array(
   array('Cups', 631, 'tcp'),
 //array('Sane', 6566, 'tcp'),
 //array('Openfire', 9091, 'tcp'),
-  array('SVN', 3690, 'tcp'),
+//array('SVN', 3690, 'tcp'),
+//array('Git', 9418, 'tcp'),
   array('UPnP', 1900, 'udp'),
 //array('MiniDLNA', 8200, 'tcp'),
-  array('BOINC', 31416, 'tcp'),
+//array('BOINC', 31416, 'tcp'),
 );
 
 // Services that are currently running
