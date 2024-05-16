@@ -45,7 +45,7 @@ $crtFiles = array(
   'VPN: Laptop [old]'    => '/rcl/certs/openvpn/vpn.bp.de/keys/e1000h.vpn.blackpinguin.de.crt',
   'VPN: Laptop'          => '/rcl/certs/openvpn/vpn.bp.de/keys/qsec15.vpn.blackpinguin.de.crt',
 //'VPN: PC [Leitwolf]'   => '/rcl/certs/openvpn/vpn.bp.de/keys/leitwolf.vpn.blackpinguin.de.crt',
-  'VPN: PC [IceCube]'    => '/rcl/certs/openvpn/vpn.bp.de/keys/icecube.vpn.blackpinguin.de.crt',
+//'VPN: PC [IceCube]'    => '/rcl/certs/openvpn/vpn.bp.de/keys/icecube.vpn.blackpinguin.de.crt',
   'VPN: Off-site Backup' => '/rcl/certs/openvpn/vpn.bp.de/keys/killer.vpn.blackpinguin.de.crt',
 
   // S/MIME
@@ -54,9 +54,9 @@ $crtFiles = array(
 
   // GPG
   "E-Mail: <a href='//ext.blackpinguin.de/certs/rclbp.pgp'>rcl@bp.de</a>"    => '/rcl/www/ext/certs/rclbp.pgp',
-  "E-Mail: <a href='//ext.blackpinguin.de/certs/rlweb.pgp'>r.l@web.de</a>"   => '/rcl/www/ext/certs/rlweb.pgp',
-  "E-Mail: <a href='//ext.blackpinguin.de/certs/bpweb.pgp'>b_p@web.de</a>"   => '/rcl/www/ext/certs/bpweb.pgp',
-  "E-Mail: <a href='//ext.blackpinguin.de/certs/clweb.pgp'>c_l@web.de</a>"   => '/rcl/www/ext/certs/clweb.pgp',
+//"E-Mail: <a href='//ext.blackpinguin.de/certs/rlweb.pgp'>r.l@web.de</a>"   => '/rcl/www/ext/certs/rlweb.pgp',
+//"E-Mail: <a href='//ext.blackpinguin.de/certs/bpweb.pgp'>b_p@web.de</a>"   => '/rcl/www/ext/certs/bpweb.pgp',
+//"E-Mail: <a href='//ext.blackpinguin.de/certs/clweb.pgp'>c_l@web.de</a>"   => '/rcl/www/ext/certs/clweb.pgp',
 //"E-Mail: <a href='//ext.blackpinguin.de/certs/rlhaw.pgp'>r.l@hawhh.de</a>" => '/rcl/www/ext/certs/rlhaw.pgp',
 );
 if ($_SERVER['HTTP_HOST'] === 'status.localhost') {
