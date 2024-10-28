@@ -1,0 +1,10 @@
+index.html	true
+index.css	true
+index.dat	true
+index.png	true
+sitemap.xml	true
+sb-file2url.txt	true
+sb-url2name.txt	true
+favicon.ico	https://status.blackpinguin.de/favicon.ico
+cc.png	https://status.blackpinguin.de/cc.png
+w3c.png	https://status.blackpinguin.de/w3c.png
