@@ -225,26 +225,26 @@ function lastIPs(){
 			$one_offline = true;
 		}
         $to = strtotime($row['von']);
-
-		$h = 24 * (int) preg_replace("|^(?:([0-9]+)d )?[0-9]+h [0-9]+m$|","$1",$row['duration']);
-		$h += (int) preg_replace("|^(?:[0-9]+d )?([0-9]+)h [0-9]+m$|","$1",$row['duration']);
+		$h  = 24 * (int) preg_replace("|^(?:([0-9]+)d )?[0-9]+h [0-9]+m$|","$1",$row['duration']);
+		$h +=      (int) preg_replace("|^(?:[0-9]+d )?([0-9]+)h [0-9]+m$|","$1",$row['duration']);
 		$offline = $row['offline'];
 
         $body .= "<tr";
         if ($first) {
             $body .= " class='green'";
             $current_ip = $row['ip'];
-        } else if ($h <= 6 || $offline >= 30) {
-			$body .= " class='red'";
-		} else if ($h <= 22) {
-			$body .= " class='orange'";
-		}
-        $body .= ">"
-        . "<td>" . $row['ip'] . "</td>"
-        . "<td>" . $row['duration'] . "</td>"
-        ;
-        if ($offline >= 30) {
-	        $body .= "<td class='red'>" . breakDuration(toDuration($offline, 'h')) . "</td>";
+        }
+        $body .= ">";
+        $body .= "<td>" . $row['ip'] . "</td>";
+
+	$body .= '<td';
+	if      ($h <  3) { $body .= " class='red'";    }
+	else if ($h < 20) { $body .= " class='orange'"; }
+	$body .= ">" . $row['duration'] . "</td>" ;
+
+        if (30 * 60 <= $offline) {
+                $body .= "<td class='" . (2 * 60 * 60 <= $offline ? "red" : "orange" ) . "'>";
+		$body .= breakDuration(toDuration($offline, 'h')) . "</td>";
 	        $one_offline = true;
 		} else {
 			$body .= "<td/>";
