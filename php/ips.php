@@ -238,8 +238,9 @@ function lastIPs(){
         $body .= "<td>" . $row['ip'] . "</td>";
 
 	$body .= '<td';
-	if      ($h <  3) { $body .= " class='red'";    }
-	else if ($h < 20) { $body .= " class='orange'"; }
+	if     ($first)  { $body .= " class='green'";  }
+	elseif ($h <  3) { $body .= " class='red'";    }
+	elseif ($h < 20) { $body .= " class='orange'"; }
 	$body .= ">" . $row['duration'] . "</td>" ;
 
         if (30 * 60 <= $offline) {
